@@ -1,0 +1,98 @@
+{
+  "about": {
+    "headline": "I build AI systems that think, reason, and deliver results.",
+    "paragraphs": [
+      "I'm Kunal Deshmukh — an AI/ML Engineer specializing in Agentic AI, Generative AI, and production-grade machine learning systems. I bridge the gap between cutting-edge research and real-world business impact.",
+      "My work spans end-to-end ML pipelines, LLM-powered applications, and computer vision systems — built with a focus on explainability, reliability, and fast iteration. I believe AI should be a tool you can trust, not a black box you hope works.",
+      "Since completing my Bachelor of Data Science at SPPU (June 2025), I've shipped projects that cut analysis effort by 60%, achieve 95%+ detection accuracy, and help organizations make smarter, faster decisions."
+    ],
+    "location": "Pune, Maharashtra",
+    "email": "deshmukhkunal556@gmail.com",
+    "phone": "+91 8446201187",
+    "availability": "Open to full-time AI/ML roles and select freelance/contract engagements"
+  },
+  "skills": {
+    "Languages": ["Python", "SQL", "JavaScript", "HTML/CSS", "Bash"],
+    "AI / ML": ["Machine Learning", "Deep Learning", "NLP", "Reinforcement Learning", "Model Evaluation & Tuning", "Feature Engineering"],
+    "Generative AI": ["LLMs (Llama 3, GPT-4, Gemini)", "Prompt Engineering", "RAG Pipelines", "LangChain", "LangGraph", "Agentic AI / AI Agents", "Vector Databases"],
+    "Computer Vision": ["OpenCV", "MediaPipe", "Pose Estimation", "Object Detection", "Image Classification"],
+    "Frameworks & Web": ["React", "Flask", "FastAPI", "Node.js", "Streamlit", "REST APIs"],
+    "Data & Tools": ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "Prophet", "Matplotlib", "Seaborn", "Git", "Docker", "Jupyter"]
+  },
+  "featured_projects": [
+    {
+      "name": "cloud-cost-forecasting-engine",
+      "description": "Agentic AI Cloud Cost Forecasting Engine using React, Flask, Prophet, XGBoost and Llama 3. Reduces manual analysis effort by 60% with natural language cost insights.",
+      "tech": ["React", "Flask", "Prophet", "XGBoost", "Llama 3", "Agentic AI"],
+      "stars": 0,
+      "url": "https://github.com/Kunal-1504/cloud-cost-forecasting-engine",
+      "language": "JavaScript"
+    },
+    {
+      "name": "MIDC-Project-Approval-Risk-Predictor",
+      "description": "AI-powered evaluation desk for MIDC — a 10-agent LangGraph pipeline that automates risk scoring, generates explainable reports, and flags high-risk submissions before human review.",
+      "tech": ["Python", "LangGraph", "AI Agents", "Machine Learning", "Risk Assessment"],
+      "stars": 0,
+      "url": "https://github.com/Kunal-1504/MIDC-Project-Approval-Risk-Predictor",
+      "language": "Python"
+    },
+    {
+      "name": "society-compliance-copilot",
+      "description": "AI-powered Society Compliance Chatbot built with FastAPI, LangChain, and RAG. Helps housing societies instantly query bylaws, rules, and compliance requirements in natural language.",
+      "tech": ["Python", "FastAPI", "LangChain", "RAG", "Vector Database"],
+      "stars": 0,
+      "url": "https://github.com/Kunal-1504/society-compliance-copilot",
+      "language": "Python"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Data Science",
+      "institution": "Savitribai Phule Pune University (SPPU)",
+      "year": "June 2025",
+      "grade": "CGPA 8.2 / 10",
+      "icon": "🎓"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Data Visualization",
+      "issuer": "Forage",
+      "icon": "📊"
+    },
+    {
+      "name": "SQL for Data Engineers",
+      "issuer": "Udemy",
+      "icon": "🗄️"
+    },
+    {
+      "name": "Guinness World Record Contributor",
+      "issuer": "SPPU — Meri Maati Mera Desh",
+      "date": "December 2024",
+      "icon": "🏆"
+    }
+  ],
+  "value_props": [
+    {
+      "icon": "⚡",
+      "title": "End-to-End Builder",
+      "description": "From data pipeline to deployed API to polished UI — I own the full stack. No handoff gaps, no black holes between ML and product."
+    },
+    {
+      "icon": "🔍",
+      "title": "Explainable AI, Not Black Boxes",
+      "description": "Every model I ship comes with interpretability built in. Stakeholders get clear reasoning, not just a score they have to trust blindly."
+    },
+    {
+      "icon": "🚀",
+      "title": "Fast Iteration, Real Impact",
+      "description": "I move from idea to working prototype quickly, test with real data, and iterate until the numbers move. Shipping beats planning."
+    }
+  ],
+  "social": {
+    "linkedin": "https://linkedin.com/in/kunal-deshmukh1504",
+    "github": "https://github.com/Kunal-1504",
+    "email": "deshmukhkunal556@gmail.com",
+    "location": "Pune, Maharashtra, India"
+  }
+}

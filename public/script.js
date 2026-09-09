@@ -939,16 +939,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const CHECK_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
   const ERROR_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
-  const setStatusMsg = (text, kind) => {
+  const setStatusMsg = (content, kind, isHtml = false) => {
     formStatusMsg.innerHTML = '';
     formStatusMsg.className = 'form-feedback-msg';
-    if (!text) return;
+    if (!content) return;
     formStatusMsg.classList.add(kind);
     const icon = document.createElement('span');
     icon.className = 'status-icon';
     icon.innerHTML = kind === 'success' ? CHECK_ICON_SVG : ERROR_ICON_SVG;
     const label = document.createElement('span');
-    label.textContent = text;
+    if (isHtml) {
+      label.innerHTML = content;
+    } else {
+      label.textContent = content;
+    }
     formStatusMsg.appendChild(icon);
     formStatusMsg.appendChild(label);
   };
@@ -1022,33 +1026,104 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (btnSubmitProposal) btnSubmitProposal.disabled = true;
 
-      const fullMessage = `[CONFIGURED SCOPE: ${scopeInput ? scopeInput.value : 'N/A'}]\n\n${messageInput.value.trim()}`;
+      const senderName = nameInput.value.trim();
+      const senderEmail = emailInput.value.trim();
+      const chosenScope = scopeInput ? scopeInput.value.trim() : 'Project Inquiry';
+      const userBrief = messageInput.value.trim();
+      const fullMessage = `[CONFIGURED SCOPE: ${chosenScope}]\n\n${userBrief}`;
 
-      try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: nameInput.value.trim(),
-            email: emailInput.value.trim(),
-            message: fullMessage
-          })
-        });
+      const openEmailClientFallback = () => {
+        const subject = encodeURIComponent(`[Portfolio Inquiry] ${senderName} — ${chosenScope}`);
+        const body = encodeURIComponent(
+          `Hi Kunal,\n\nName: ${senderName}\nEmail: ${senderEmail}\nScope: ${chosenScope}\n\nProject Requirements:\n${userBrief}\n`
+        );
+        const mailtoUrl = `mailto:deshmukhkunal556@gmail.com?subject=${subject}&body=${body}`;
 
-        const data = await res.json();
-        if (data.success) {
-          setStatusMsg('Inquiry received successfully. Kunal will respond within 24 hours.', 'success');
-          appleContactForm.reset();
-          validators.forEach((v) => v.input.classList.remove('invalid', 'valid'));
-        } else {
-          setStatusMsg(`Submission error: ${data.error || 'Please email deshmukhkunal556@gmail.com directly.'}`, 'error');
+        setStatusMsg(
+          `Inquiry prepared! Launching your mail client... If it doesn't open automatically, <a href="${mailtoUrl}" style="color:var(--apple-accent,#2997ff);text-decoration:underline;font-weight:600;">click here to send email</a>.`,
+          'success',
+          true
+        );
+
+        setTimeout(() => {
+          window.location.href = mailtoUrl;
+        }, 400);
+      };
+
+      let sentSuccessfully = false;
+
+      // 1. If running on local server, try the local Node.js /api/contact endpoint
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      if (isLocalhost) {
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: senderName,
+              email: senderEmail,
+              message: fullMessage
+            })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success) {
+              sentSuccessfully = true;
+            }
+          }
+        } catch (_) {
+          // Fall through to FormSubmit
         }
-      } catch (err) {
-        setStatusMsg('Connection error: Please email deshmukhkunal556@gmail.com directly.', 'error');
-      } finally {
-        if (submitBtnText) submitBtnText.textContent = 'Submit Project Inquiry';
-        if (btnSubmitProposal) btnSubmitProposal.disabled = false;
       }
+
+      // 2. If not local or if local failed (e.g. static hosting on GitHub Pages), dispatch via FormSubmit.co
+      if (!sentSuccessfully) {
+        try {
+          const fsRes = await fetch('https://formsubmit.co/ajax/deshmukhkunal556@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              name: senderName,
+              email: senderEmail,
+              scope: chosenScope,
+              message: userBrief,
+              _subject: `[Portfolio Inquiry] ${senderName} — ${chosenScope}`,
+              _template: 'table',
+              _captcha: 'false'
+            })
+          });
+
+          const rawText = await fsRes.text();
+          let fsData = {};
+          try {
+            fsData = JSON.parse(rawText);
+          } catch (_) {}
+
+          const isOk = fsData.success === true || fsData.success === 'true';
+          const isActivationNotice = fsData.message && fsData.message.toLowerCase().includes('activation');
+
+          if (isOk || isActivationNotice) {
+            sentSuccessfully = true;
+          }
+        } catch (_) {
+          // Network error or adblocker blocking third-party forms
+        }
+      }
+
+      // 3. UI feedback
+      if (sentSuccessfully) {
+        setStatusMsg('Inquiry received successfully! Kunal will respond within 24 hours.', 'success');
+        appleContactForm.reset();
+        validators.forEach((v) => v.input.classList.remove('invalid', 'valid'));
+      } else {
+        openEmailClientFallback();
+      }
+
+      if (submitBtnText) submitBtnText.textContent = 'Submit Project Inquiry';
+      if (btnSubmitProposal) btnSubmitProposal.disabled = false;
     });
   }
 
@@ -1107,12 +1182,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  fetch('/api/content')
-    .then((r) => (r.ok ? r.json() : null))
-    .then((res) => {
-      if (res && res.success && res.data) applyContentData(res.data);
-    })
-    .catch(() => {});
+  const loadDynamicContent = async () => {
+    try {
+      const r = await fetch('/api/content');
+      if (r.ok) {
+        const res = await r.json();
+        if (res && res.success && res.data) {
+          applyContentData(res.data);
+          return;
+        }
+      }
+    } catch (_) {}
+
+    try {
+      const rStatic = await fetch('./content.json');
+      if (rStatic.ok) {
+        const data = await rStatic.json();
+        applyContentData(data);
+      }
+    } catch (_) {}
+  };
+  loadDynamicContent();
 
   /* ─── 10. LIVE GITHUB PROJECTS ("More on GitHub" grid) ─────────── */
   const FEATURED_REPO_NAMES = new Set([
@@ -1200,18 +1290,49 @@ document.addEventListener('DOMContentLoaded', () => {
     wrap.hidden = false;
   };
 
-  showGithubSkeleton();
-  fetch('/api/projects')
-    .then((r) => (r.ok ? r.json() : null))
-    .then((res) => {
-      // Skip the fallback case — those are the same 3 repos already shown as case studies above.
-      if (res && res.success && Array.isArray(res.projects) && res.source !== 'fallback') {
-        renderGithubProjects(res.projects);
-      } else {
-        hideGithubSection();
+  const loadGithubProjects = async () => {
+    showGithubSkeleton();
+    try {
+      const r = await fetch('/api/projects');
+      if (r.ok) {
+        const res = await r.json();
+        if (res && res.success && Array.isArray(res.projects) && res.source !== 'fallback') {
+          renderGithubProjects(res.projects);
+          return;
+        }
       }
-    })
-    .catch(() => hideGithubSection());
+    } catch (_) {}
+
+    try {
+      const ghRes = await fetch('https://api.github.com/users/Kunal-1504/repos?per_page=100&sort=updated', {
+        headers: { Accept: 'application/vnd.github.v3+json' }
+      });
+      if (ghRes.ok) {
+        const repos = await ghRes.json();
+        if (Array.isArray(repos)) {
+          const usable = repos
+            .filter((r) => !r.fork && r.description && r.description.trim().length > 5)
+            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+            .slice(0, 9)
+            .map((r) => ({
+              name: r.name,
+              description: r.description,
+              language: r.language || 'Python',
+              stars: r.stargazers_count,
+              forks: r.forks_count,
+              url: r.html_url
+            }));
+          if (usable.length > 0) {
+            renderGithubProjects(usable);
+            return;
+          }
+        }
+      }
+    } catch (_) {}
+
+    hideGithubSection();
+  };
+  loadGithubProjects();
 
   /* ─── 11. DEVELOPER TERMINAL DRAWER (easter egg) ────────────────── */
   const terminalDrawer = document.getElementById('terminalDrawer');
