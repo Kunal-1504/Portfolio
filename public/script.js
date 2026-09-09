@@ -267,10 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Harmonic sine-wave drift: each node breathes along its own radial normal,
-      // amplified by cursor velocity (repel) and by click/easter-egg surges (ripple).
+      // Harmonic sine-wave drift with responsive scaling to fit mobile/tablet canvas
+      const responsiveScale = Math.min(1, Math.min(width * 0.32, height * 0.42) / 130);
       nodes.forEach((node) => {
-        const wobble = 1 + Math.sin(time * 0.7 + node.phase) * 0.025 + velocity * 0.06 + surge * 0.18;
+        const wobble = (1 + Math.sin(time * 0.7 + node.phase) * 0.025 + velocity * 0.06 + surge * 0.18) * responsiveScale;
         node.origX = node.baseX * wobble;
         node.origY = node.baseY * wobble;
         node.origZ = node.baseZ * wobble;
@@ -568,14 +568,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Touch / Drag controls for mobile
-    let touchStart = null;
+    gameCanvas.addEventListener('touchstart', (e) => {
+      if (!isPlaying && e.touches.length > 0) {
+        startNewGame();
+      }
+    }, { passive: true });
+
     gameCanvas.addEventListener('touchmove', (e) => {
       if (!isPlaying || e.touches.length === 0) return;
       const rect = gameCanvas.getBoundingClientRect();
       const tx = e.touches[0].clientX - rect.left;
       const ty = e.touches[0].clientY - rect.top;
-      agent.x += (tx - agent.x) * 0.2;
-      agent.y += (ty - agent.y) * 0.2;
+      agent.x += (tx - agent.x) * 0.25;
+      agent.y += (ty - agent.y) * 0.25;
       e.preventDefault();
     }, { passive: false });
 
