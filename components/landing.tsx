@@ -64,6 +64,29 @@ export function Landing() {
           <motion.p variants={fade} className="hero-description">
             A little human. A little AI. A lot of possibility.
           </motion.p>
+          <motion.button
+            variants={fade}
+            className="current-role-link"
+            disabled={pending}
+            onClick={() =>
+              ask(
+                "Tell me about your experience at Stark Digital Media Services",
+              )
+            }
+            onPointerEnter={() =>
+              warmQuestion(
+                "Tell me about your experience at Stark Digital Media Services",
+              )
+            }
+            onFocus={() =>
+              warmQuestion(
+                "Tell me about your experience at Stark Digital Media Services",
+              )
+            }
+          >
+            At {portfolio.experience[0].company} · Since June 2026
+            <ArrowUpRight size={12} />
+          </motion.button>
           <motion.div variants={fade} className="hero-portrait">
             <span className="portrait-note note-left">
               Building things

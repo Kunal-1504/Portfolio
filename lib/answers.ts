@@ -4,6 +4,11 @@ export function previewAnswer(question: string): {
   tool?: PortfolioToolName;
 } {
   const q = question.toLowerCase().trim();
+  if (/experience|stark|employ|career|where.*work|current (job|role)/.test(q))
+    return {
+      text: "I’ve been an AI Trainee Engineer at Stark Digital Media Services in Pune since June 2026. My work includes production RAG systems, an IoT-integrated AI solution, and collaborating through Git and code review.",
+      tool: "getPresentation",
+    };
   if (/document[ -]*management|\bdms\b|largest project|flagship/.test(q))
     return {
       text: "My Document Management System is my largest project: a multi-tenant platform that turns uploaded documents into searchable knowledge and cited answers. It brings together Next.js, FastAPI, background workers, and a layered RAG pipeline. Open the first card for the architecture highlights.",

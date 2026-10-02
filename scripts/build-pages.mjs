@@ -29,7 +29,7 @@ for (const item of [
   });
 }
 await mkdir(path.join(stage, "public"));
-for (const item of ["assets", "avatar-kunal.png"])
+for (const item of ["assets", "avatar-kunal-passport.png"])
   await cp(path.join(root, "public", item), path.join(stage, "public", item), {
     recursive: true,
   });

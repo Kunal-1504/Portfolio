@@ -8,8 +8,27 @@ export const portfolio = {
   phone: "+91 84462 01187",
   github: "https://github.com/Kunal-1504",
   linkedin: "https://linkedin.com/in/kunal-deshmukh1504",
-  resume: "/assets/Kunal_Deshmukh_Resume.docx",
+  resume: "/assets/Kunal_Deshmukh_AI_Engineer_Resume_Virtueinfo.docx",
   bio: "I build AI systems that think, reason, and deliver real results. From autonomous agents to computer vision, I turn interesting problems into useful, explainable products.",
+  experience: [
+    {
+      company: "Stark Digital Media Services",
+      role: "AI Trainee Engineer",
+      location: "Pune",
+      startDate: "2026-06",
+      period: "June 2026 – Present",
+      highlights: [
+        "Built and deployed 4 production RAG systems for company-document question answering, covering prompt engineering, retrieval pipeline design, and LLM fine-tuning.",
+        "Shipped an IoT-integrated AI solution from prototype to production, connecting hardware, backend APIs, and AI models with cross-functional teams.",
+        "Collaborated in a shared codebase using Git and team code review to bring AI features into reliable client use.",
+      ],
+      outcomes: [
+        { value: "4", label: "Production RAG systems" },
+        { value: "1", label: "IoT-integrated AI solution" },
+      ],
+      source: "User-provided résumé",
+    },
+  ],
   education: {
     degree: "B.Sc. Data Science",
     institution: "Savitribai Phule Pune University (SPPU)",

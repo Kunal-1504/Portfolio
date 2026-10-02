@@ -28,8 +28,8 @@ export function Avatar({
       }}
     >
       <Image
-        src={publicPath("/avatar-kunal.png")}
-        alt="Personalized 3D avatar of Kunal waving"
+        src={publicPath("/avatar-kunal-passport.png")}
+        alt="Head-and-shoulders avatar of Kunal Deshmukh"
         width={small ? 64 : 330}
         height={small ? 64 : 330}
         priority={!small}

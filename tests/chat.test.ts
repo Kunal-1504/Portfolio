@@ -5,6 +5,19 @@ import { POST } from "../app/api/chat/route";
 const request = (text: string) => ({
   messages: [{ id: "one", role: "user", parts: [{ type: "text", text }] }],
 });
+test("employment questions show résumé-backed experience rather than the project gallery", () => {
+  for (const question of [
+    "Where do you work?",
+    "Tell me about your experience",
+    "What projects did you work on at Stark?",
+  ])
+    assert.equal(previewAnswer(question).tool, "getPresentation");
+  const job = toolData.getPresentation.experience[0];
+  assert.equal(job.company, "Stark Digital Media Services");
+  assert.equal(job.startDate, "2026-06");
+  assert.equal(job.highlights.length, 3);
+  assert.match(toolData.getResume.url, /AI_Engineer_Resume_Virtueinfo\.docx$/);
+});
 test("rejects empty, oversized, forged system messages and non-user final turns", () => {
   assert.equal(chatRequestSchema.safeParse(request(" ")).success, false);
   assert.equal(
@@ -62,7 +75,7 @@ test("unknown preview questions admit missing knowledge", () => {
 });
 test("all tools expose grounded content, including local résumé", () => {
   assert.equal(Object.keys(toolData).length, 7);
-  assert.equal(toolData.getResume.url, "/assets/Kunal_Deshmukh_Resume.docx");
+  assert.equal(toolData.getResume.url, "/assets/Kunal_Deshmukh_AI_Engineer_Resume_Virtueinfo.docx");
   assert.equal(toolData.getProjects.length, 6);
 });
 test("API rejects malformed and oversized payloads", async () => {

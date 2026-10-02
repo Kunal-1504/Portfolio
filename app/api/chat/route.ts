@@ -17,7 +17,7 @@ export const maxDuration = 30;
 export const runtime = "nodejs";
 const descriptions = {
   getPresentation:
-    "Show Kunal’s bio, education, location and introduction card.",
+    "Show Kunal’s bio, employment experience, responsibilities, education, location and introduction card.",
   getProjects:
     "Show interactive project cards with results, stacks, and GitHub links.",
   getSkills: "Show skills grouped into technical categories.",

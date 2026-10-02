@@ -3,6 +3,7 @@ import { publicPath } from "@/lib/hosting";
 import { useState } from "react";
 import {
   ArrowUpRight,
+  BriefcaseBusiness,
   Check,
   Copy,
   Download,
@@ -47,6 +48,40 @@ function Presentation() {
       <div className="location-line">
         <MapPin size={13} />
         {portfolio.location}
+      </div>
+      <div className="experience-section">
+        <span className="eyebrow">EXPERIENCE</span>
+        {portfolio.experience.map((job) => (
+          <article className="experience-entry" key={job.company}>
+            <div className="experience-heading">
+              <span className="experience-icon">
+                <BriefcaseBusiness size={20} />
+              </span>
+              <div>
+                <h3>{job.role}</h3>
+                <p>
+                  {job.company} · {job.location}
+                </p>
+                <span className="experience-period">
+                  <time dateTime={job.startDate}>June 2026</time> – Present
+                </span>
+              </div>
+            </div>
+            <div className="experience-outcomes">
+              {job.outcomes.map((outcome) => (
+                <div key={outcome.label}>
+                  <strong>{outcome.value}</strong>
+                  <span>{outcome.label}</span>
+                </div>
+              ))}
+            </div>
+            <ul className="experience-highlights">
+              {job.highlights.map((highlight) => (
+                <li key={highlight}>{highlight}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </div>
       <div className="education-row">
         <GraduationCap size={22} />
