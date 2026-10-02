@@ -8,7 +8,7 @@ export const portfolio = {
   phone: "+91 84462 01187",
   github: "https://github.com/Kunal-1504",
   linkedin: "https://linkedin.com/in/kunal-deshmukh1504",
-  resume: "/assets/Kunal_Deshmukh_AI_Engineer_Resume_Virtueinfo.docx",
+  resume: "/assets/Kunal_Deshmukh_AI_Engineer_Resume_Optimized.docx",
   bio: "I build AI systems that think, reason, and deliver real results. From autonomous agents to computer vision, I turn interesting problems into useful, explainable products.",
   experience: [
     {

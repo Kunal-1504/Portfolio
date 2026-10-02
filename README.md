@@ -39,7 +39,7 @@ Live mode uses `streamText`, server-executed tools, up to two model steps, a 600
 
 - **`data/portfolio.ts`**: the single source for personal details, projects, metrics, skills, contact information, availability, and quick questions. Both cards and server tools read it.
 - **`public/avatar-kunal.png`**: personalized transparent avatar, preserving the waving pose with balanced adult proportions. The previous avatar is retained as `public/avatar.png`.
-- **`public/assets/Kunal_Deshmukh_Resume.docx`**: the original local résumé, already available for download.
+- **`public/assets/Kunal_Deshmukh_AI_Engineer_Resume_Optimized.docx`**: the latest supplied résumé, already available for download.
 - **`app/globals.css`**: warm neutral theme, responsive layout, and dark theme tokens. Inter is served locally through `@fontsource/inter`.
 - **`app/opengraph-image.tsx`**: generated social sharing image.
 

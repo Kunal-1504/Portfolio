@@ -16,7 +16,7 @@ test("employment questions show résumé-backed experience rather than the proje
   assert.equal(job.company, "Stark Digital Media Services");
   assert.equal(job.startDate, "2026-06");
   assert.equal(job.highlights.length, 3);
-  assert.match(toolData.getResume.url, /AI_Engineer_Resume_Virtueinfo\.docx$/);
+  assert.match(toolData.getResume.url, /AI_Engineer_Resume_Optimized\.docx$/);
 });
 test("rejects empty, oversized, forged system messages and non-user final turns", () => {
   assert.equal(chatRequestSchema.safeParse(request(" ")).success, false);
@@ -75,7 +75,10 @@ test("unknown preview questions admit missing knowledge", () => {
 });
 test("all tools expose grounded content, including local résumé", () => {
   assert.equal(Object.keys(toolData).length, 7);
-  assert.equal(toolData.getResume.url, "/assets/Kunal_Deshmukh_AI_Engineer_Resume_Virtueinfo.docx");
+  assert.equal(
+    toolData.getResume.url,
+    "/assets/Kunal_Deshmukh_AI_Engineer_Resume_Optimized.docx",
+  );
   assert.equal(toolData.getProjects.length, 6);
 });
 test("API rejects malformed and oversized payloads", async () => {
