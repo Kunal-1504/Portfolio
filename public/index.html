@@ -26,7 +26,33 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="apple-body">
+<body class="astra-body">
+
+  <!-- Cinematic Film Grain Noise Texture -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Cursor glow that follows the mouse -->
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       OPENAI ASTRA CINEMATIC OPENING INTRO CURTAIN
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="astra-intro-curtain" id="introCurtain" aria-hidden="true">
+    <div class="curtain-panel curtain-top"></div>
+    <div class="curtain-panel curtain-bottom"></div>
+    <div class="intro-loader-content" id="introLoaderContent">
+      <div class="intro-monogram">KD</div>
+      <div class="intro-status-row">
+        <span class="intro-dot"></span>
+        <span class="intro-status-text" id="introStatusText">INITIALIZING ASTRA SYSTEM...</span>
+      </div>
+      <div class="intro-progress-bar">
+        <div class="intro-progress-fill" id="introProgressFill"></div>
+      </div>
+      <div class="intro-counter" id="introCounter">0%</div>
+      <div class="intro-skip-hint">Click anywhere to skip</div>
+    </div>
+  </div>
 
   <a href="#mainContent" class="skip-link">Skip to content</a>
 
@@ -90,31 +116,51 @@
 
   <main id="mainContent">
     <!-- ═══════════════════════════════════════════════════════════════
-         2. HERO SECTION (APPLE KEYNOTE STYLE)
+         2. HERO SECTION — CINEMATIC FULL-SCREEN
          ═══════════════════════════════════════════════════════════════ -->
     <section class="apple-hero" id="hero">
+
+      <!-- Animated abstract canvas fills the entire hero background -->
+      <canvas id="neuralCoreCanvas" aria-label="Interactive abstract animated background"></canvas>
+
+      <!-- Dark vignette overlay for text legibility -->
       <div class="hero-aurora-glow" aria-hidden="true"></div>
 
+      <!-- Morphing Aurora Background Blobs -->
+      <div class="hero-aurora-blobs" aria-hidden="true">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+      </div>
+
+      <!-- Centered Hero Content -->
       <div class="hero-content">
-        <!-- Apple Intelligence Style Gradient Aura Badge -->
+
+        <!-- Status badge — typed out on load -->
         <div class="hero-badge-wrap">
           <div class="apple-intelligence-badge">
             <span class="badge-sparkle">✦</span>
-            <span class="badge-text">AI/ML ENGINEER // OPEN TO OPPORTUNITIES</span>
+            <span class="badge-text" id="heroBadgeText">AI/ML ENGINEER // OPEN TO OPPORTUNITIES</span>
           </div>
         </div>
 
-        <!-- Headline with Titanium Sheen -->
-        <h1 class="hero-headline">
-          Intelligence.<br />
-          <span class="text-gradient">Engineered for Business Impact.</span>
+        <!-- Massive headline with staggered word fade-up-and-blur reveal -->
+        <h1 class="hero-headline" id="heroHeadline">
+          <span class="hero-word-row">
+            <span class="hero-word" data-word-idx="0">Intelligence.</span>
+          </span>
+          <span class="hero-word-row">
+            <span class="hero-word text-gradient" data-word-idx="1">Engineered</span>
+            <span class="hero-word text-gradient" data-word-idx="2">for</span>
+            <span class="hero-word text-gradient" data-word-idx="3">Impact.</span>
+          </span>
         </h1>
 
         <p class="hero-subhead">
           I design and build <strong>autonomous AI agents, computer vision systems, and high-precision machine learning pipelines</strong> — as a full-time AI/ML engineer or freelance collaborator — with a focus on production-grade, explainable results.
         </p>
 
-        <!-- Keynote CTAs -->
+        <!-- CTAs -->
         <div class="hero-cta-group">
           <a href="#contact" class="apple-btn-primary">
             <span>Get In Touch</span>
@@ -126,40 +172,89 @@
           </a>
         </div>
 
-        <!-- Interactive Floating Neural Core Visualizer -->
-        <div class="hero-neural-visualizer" id="neuralVisualizerContainer">
-          <canvas id="neuralCoreCanvas" width="900" height="420" aria-label="Interactive 3D Neural Particle Core"></canvas>
-          <div class="visualizer-hint">
-            <span class="hint-dot"></span>
-            <span>Interactive Neural Core — Move cursor to interact with node tensors</span>
-          </div>
-        </div>
-
-        <!-- Apple Keynote Metrics Strip -->
-        <div class="apple-metrics-strip">
-          <div class="metric-card">
-            <div class="metric-val text-gradient">-60%</div>
-            <div class="metric-label">Analysis Overhead</div>
-            <div class="metric-sub">Multi-cloud forecasting engine cutting manual effort</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-val text-gradient">95%+</div>
-            <div class="metric-label">Computer Vision Accuracy</div>
-            <div class="metric-sub">MediaPipe pose tracking & rep estimation precision</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-val text-gradient">10-Agent</div>
-            <div class="metric-label">Stateful Workflow DAG</div>
-            <div class="metric-sub">LangGraph pipeline with automated risk scoring</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-val text-gradient">8.2 CGPA</div>
-            <div class="metric-label">SPPU Data Science '25</div>
-            <div class="metric-sub">Guinness World Record Contributor // Pune, India</div>
-          </div>
-        </div>
       </div>
+
+      <!-- Scroll hint at bottom -->
+      <div class="visualizer-hint" data-parallax-speed="1.0">
+        <span class="hint-dot"></span>
+        <span>Move cursor to interact · Scroll to explore</span>
+      </div>
+
     </section>
+
+    <!-- Metrics Strip — immediately below hero (below the fold) -->
+    <div class="apple-metrics-strip">
+      <div class="metric-card reveal">
+        <div class="metric-val" data-count-to="-60" data-suffix="%" data-prefix="">-60%</div>
+        <div class="metric-label">Analysis Overhead</div>
+        <div class="metric-sub">Multi-cloud forecasting engine cutting manual effort</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-val" data-count-to="95" data-suffix="%" data-prefix="">95%+</div>
+        <div class="metric-label">Computer Vision Accuracy</div>
+        <div class="metric-sub">MediaPipe pose tracking &amp; rep estimation precision</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-val">10-Agent</div>
+        <div class="metric-label">Stateful Workflow DAG</div>
+        <div class="metric-sub">LangGraph pipeline with automated risk scoring</div>
+      </div>
+      <div class="metric-card reveal">
+        <div class="metric-val" data-count-to="8.2" data-suffix=" CGPA" data-decimals="1">8.2 CGPA</div>
+        <div class="metric-label">SPPU Data Science '25</div>
+        <div class="metric-sub">Guinness World Record Contributor // Pune, India</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         TECH MARQUEE STRIP
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="tech-marquee-section" aria-hidden="true">
+      <div class="tech-marquee-track" id="marqueeTrack">
+        <!-- First copy -->
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Python</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>LangGraph</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>LangChain</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Llama 3</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>GPT-4</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Gemini</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>RAG Pipelines</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Vector Databases</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>OpenCV</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>MediaPipe</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>XGBoost</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Prophet</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>FastAPI</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>React</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Flask</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Docker</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Scikit-Learn</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Prompt Engineering</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Agentic AI</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Pose Estimation</span>
+        <!-- Duplicate copy for seamless loop -->
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Python</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>LangGraph</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>LangChain</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Llama 3</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>GPT-4</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Gemini</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>RAG Pipelines</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Vector Databases</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>OpenCV</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>MediaPipe</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>XGBoost</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Prophet</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>FastAPI</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>React</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Flask</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Docker</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Scikit-Learn</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Prompt Engineering</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Agentic AI</span>
+        <span class="tech-marquee-item"><span class="marquee-dot"></span>Pose Estimation</span>
+      </div>
+    </div>
 
     <!-- ═══════════════════════════════════════════════════════════════
          3. SOLUTIONS & SERVICE PACKAGES (APPLE PRO FEATURE GRID)
@@ -296,7 +391,7 @@
             </div>
 
             <div class="case-visual">
-              <div class="case-mockup-frame">
+              <div class="case-mockup-frame unmask-reveal" data-parallax-speed="0.3">
                 <div class="mockup-header">
                   <span class="mockup-dot red"></span>
                   <span class="mockup-dot yellow"></span>
@@ -314,7 +409,7 @@
                     <path class="chart-line-prophet" d="M 10 130 Q 100 110, 200 80 T 390 40" fill="none" stroke="#6366f1" stroke-width="3"/>
                     <path class="chart-line-actual" d="M 10 135 L 50 128 L 90 132 L 130 112 L 170 118 L 210 82 L 250 86 L 290 65 L 330 68 L 370 45" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4 2"/>
                   </svg>
-                  <div class="mockup-insight-pill">
+                  <div class="mockup-insight-pill" data-parallax-speed="0.6">
                     <span class="insight-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.6c.6.5 1 1.3 1 2.1V17h6v-.3c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg></span>
                     <span>Llama 3 Insight: Projected 18.4% AWS anomaly detected in EU-Central node.</span>
                   </div>
@@ -363,7 +458,7 @@
             </div>
 
             <div class="case-visual">
-              <div class="case-mockup-frame">
+              <div class="case-mockup-frame unmask-reveal" data-parallax-speed="0.3">
                 <div class="mockup-header">
                   <span class="mockup-dot red"></span>
                   <span class="mockup-dot yellow"></span>
@@ -382,7 +477,7 @@
                     <span class="dag-connector">→</span>
                     <div class="dag-node special"><span>Audit Dossier</span></div>
                   </div>
-                  <div class="dag-log-box">
+                  <div class="dag-log-box" data-parallax-speed="0.6">
                     <span class="log-line green">✓ Ingestion verified: 48 PDF document pages parsed</span>
                     <span class="log-line blue">✓ Zoning bylaws: 100% compliant with MIDC industrial codes</span>
                     <span class="log-line amber">⚠ Debt-to-Equity ratio: 2.4 (Flagged for committee review)</span>
@@ -433,7 +528,7 @@
             </div>
 
             <div class="case-visual">
-              <div class="case-mockup-frame">
+              <div class="case-mockup-frame unmask-reveal" data-parallax-speed="0.3">
                 <div class="mockup-header">
                   <span class="mockup-dot red"></span>
                   <span class="mockup-dot yellow"></span>
@@ -470,10 +565,114 @@
                       <circle cx="125" cy="150" r="4" fill="#ffffff"/>
                     </svg>
                   </div>
-                  <div class="pose-overlay-stats">
+                  <div class="pose-overlay-stats" data-parallax-speed="0.6">
                     <div class="pos-stat"><span class="ps-label">ELBOW ANGLE:</span><span class="ps-val">88.4°</span></div>
                     <div class="pos-stat"><span class="ps-label">REP COUNT:</span><span class="ps-val highlight">14 REPS</span></div>
                     <div class="pos-stat"><span class="ps-label">FORM ACCURACY:</span><span class="ps-val">98.2%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Case Study 04 -->
+          <article class="case-study-card spotlight-card">
+            <div class="case-content">
+              <div class="case-tag-row">
+                <span class="tag-number">04</span>
+                <span class="tag-badge">DOCUMENT INTELLIGENCE & WORKFLOW AUTOMATION</span>
+              </div>
+              <h3 class="case-title">AI-Powered Document Management System</h3>
+              <p class="case-summary">
+                Engineered a full-stack intelligent Document Management System with AI-assisted document ingestion, semantic search, version control, and role-based access control. Integrates OCR pipelines, vector embeddings, and a natural language query interface to transform unstructured enterprise documents into a searchable, auditable knowledge base.
+              </p>
+
+              <div class="case-metrics-grid case-metrics-grid-2">
+                <div class="case-metric">
+                  <span class="cm-val text-gradient">90%</span>
+                  <span class="cm-lbl">Faster Document Retrieval</span>
+                </div>
+                <div class="case-metric">
+                  <span class="cm-val text-gradient">AI Search</span>
+                  <span class="cm-lbl">Semantic Query Interface</span>
+                </div>
+              </div>
+
+              <div class="case-tech-stack">
+                <span class="tech-pill">TypeScript</span>
+                <span class="tech-pill">React</span>
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">PostgreSQL</span>
+                <span class="tech-pill">pgvector</span>
+                <span class="tech-pill">OCR</span>
+                <span class="tech-pill">LangChain</span>
+                <span class="tech-pill">AWS S3</span>
+              </div>
+
+              <div class="case-actions">
+                <a href="https://github.com/Kunal-1504/cognitive-guardian" target="_blank" rel="noopener noreferrer" class="apple-btn-pill">
+                  <span>View Repository</span>
+                  <span class="btn-arrow">↗</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="case-visual">
+              <div class="case-mockup-frame unmask-reveal" data-parallax-speed="0.3">
+                <div class="mockup-header">
+                  <span class="mockup-dot red"></span>
+                  <span class="mockup-dot yellow"></span>
+                  <span class="mockup-dot green"></span>
+                  <span class="mockup-title">DMS — Document Intelligence Dashboard</span>
+                </div>
+                <div class="mockup-body mockup-dms">
+                  <!-- Search Bar -->
+                  <div class="dms-search-bar">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <span class="dms-search-text">Search documents semantically…</span>
+                    <span class="dms-search-badge">AI</span>
+                  </div>
+
+                  <!-- File Rows -->
+                  <div class="dms-file-list">
+                    <div class="dms-file-row active">
+                      <svg class="dms-file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <div class="dms-file-meta">
+                        <span class="dms-file-name">Q3_Financial_Report.pdf</span>
+                        <span class="dms-file-sub">v3.2 · Finance · 2.4 MB</span>
+                      </div>
+                      <span class="dms-file-status approved">Approved</span>
+                    </div>
+                    <div class="dms-file-row">
+                      <svg class="dms-file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <div class="dms-file-meta">
+                        <span class="dms-file-name">Compliance_Policy_2026.docx</span>
+                        <span class="dms-file-sub">v1.5 · Legal · 840 KB</span>
+                      </div>
+                      <span class="dms-file-status review">In Review</span>
+                    </div>
+                    <div class="dms-file-row">
+                      <svg class="dms-file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10a37f" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <div class="dms-file-meta">
+                        <span class="dms-file-name">Project_Architecture_v2.pdf</span>
+                        <span class="dms-file-sub">v2.0 · Engineering · 5.1 MB</span>
+                      </div>
+                      <span class="dms-file-status approved">Approved</span>
+                    </div>
+                    <div class="dms-file-row">
+                      <svg class="dms-file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <div class="dms-file-meta">
+                        <span class="dms-file-name">Vendor_Contract_Draft.pdf</span>
+                        <span class="dms-file-sub">v1.0 · Procurement · 1.2 MB</span>
+                      </div>
+                      <span class="dms-file-status draft">Draft</span>
+                    </div>
+                  </div>
+
+                  <!-- AI Insight Pill -->
+                  <div class="mockup-insight-pill" data-parallax-speed="0.6">
+                    <span class="insight-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+                    <span>Semantic match: 3 docs related to "Q3 revenue compliance clause 4B"</span>
                   </div>
                 </div>
               </div>

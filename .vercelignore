@@ -1,0 +1,5 @@
+.env*
+.pages-build
+out
+node_modules
+.git

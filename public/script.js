@@ -1,6 +1,6 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  APPLE.COM PRO & APPLE INTELLIGENCE INTERACTIVE ENGINE
+ *  OPENAI GPT-6 ASTRA — INTERACTIVE ENGINE
  *  Kunal Deshmukh — AI/ML & Agentic Systems Engineer
  * ═══════════════════════════════════════════════════════════════════
  */
@@ -8,9 +8,313 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  /* ─── 1. SPOTLIGHT CURSOR HOVER + SUBTLE 3D TILT ───────────────── */
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let triggerNeuralSurge = () => {};
+
+  /* ─── 00. OPENAI ASTRA CINEMATIC OPENING SEQUENCE ───────────────── */
+  const introCurtain = document.getElementById('introCurtain');
+  const introProgressFill = document.getElementById('introProgressFill');
+  const introCounter = document.getElementById('introCounter');
+  const introStatusText = document.getElementById('introStatusText');
+  const heroWords = document.querySelectorAll('.hero-word');
+  const heroLines = document.querySelectorAll('.hero-line-inner');
+  const heroBadge = document.querySelector('.hero-badge-wrap');
+  const heroSubhead = document.querySelector('.hero-subhead');
+  const heroCtas = document.querySelector('.hero-cta-group');
+  const globalNav = document.getElementById('globalNav');
+  const badgeTextEl = document.getElementById('heroBadgeText');
+
+  const startBadgeTypewriter = () => {
+    if (!badgeTextEl || prefersReducedMotion) return;
+    const originalText = badgeTextEl.textContent.trim();
+    badgeTextEl.textContent = '';
+    let idx = 0;
+    const typeNextChar = () => {
+      if (idx < originalText.length) {
+        badgeTextEl.textContent += originalText[idx];
+        idx++;
+        setTimeout(typeNextChar, 24);
+      }
+    };
+    setTimeout(typeNextChar, 200);
+  };
+
+  const triggerHeroEntrance = () => {
+    // 1. Shockwave burst in 3D neural core
+    if (typeof triggerNeuralSurge === 'function') {
+      triggerNeuralSurge();
+    }
+    // 2. Navbar drops down into view
+    if (globalNav) globalNav.classList.add('nav-revealed');
+    // 3. Hero badge pops in & starts typewriter
+    if (heroBadge) heroBadge.classList.add('revealed');
+    startBadgeTypewriter();
+    // 4. Staggered hero headline word fade-up-and-blur reveal (50-80ms delay)
+    if (heroWords.length > 0) {
+      heroWords.forEach((word, i) => {
+        setTimeout(() => {
+          word.classList.add('revealed');
+        }, 80 + i * 65);
+      });
+    } else {
+      heroLines.forEach((line, i) => {
+        setTimeout(() => {
+          line.classList.add('revealed');
+        }, 80 + i * 140);
+      });
+    }
+    // 5. Subhead and CTA button fade in after the headline with slight delay
+    const subheadDelay = heroWords.length > 0 ? (80 + heroWords.length * 65 + 140) : 380;
+    setTimeout(() => {
+      if (heroSubhead) heroSubhead.classList.add('revealed');
+    }, subheadDelay);
+    // 6. CTAs pop in
+    setTimeout(() => {
+      if (heroCtas) heroCtas.classList.add('revealed');
+    }, subheadDelay + 200);
+  };
+
+  if (introCurtain && !prefersReducedMotion) {
+    let progress = 0;
+    let finished = false;
+
+    const completeIntro = () => {
+      if (finished) return;
+      finished = true;
+      if (introProgressFill) introProgressFill.style.width = '100%';
+      if (introCounter) introCounter.textContent = '100%';
+      if (introStatusText) introStatusText.textContent = 'SYSTEM ONLINE // ASTRA CORE READY';
+
+      setTimeout(() => {
+        introCurtain.classList.add('open');
+        triggerHeroEntrance();
+        setTimeout(() => {
+          introCurtain.classList.add('hidden');
+        }, 1100);
+      }, 250);
+    };
+
+    const statusMessages = [
+      { at: 0, msg: 'INITIALIZING NEURAL WEIGHTS...' },
+      { at: 35, msg: 'CALIBRATING TENSOR MESH...' },
+      { at: 70, msg: 'CONNECTING AGENTIC GRAPHS...' },
+      { at: 92, msg: 'SYSTEM ONLINE // ASTRA CORE' }
+    ];
+
+    const stepInterval = setInterval(() => {
+      if (finished) {
+        clearInterval(stepInterval);
+        return;
+      }
+      progress += Math.floor(Math.random() * 8) + 4;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(stepInterval);
+        completeIntro();
+      } else {
+        if (introProgressFill) introProgressFill.style.width = `${progress}%`;
+        if (introCounter) introCounter.textContent = `${progress}%`;
+        const currentMsg = statusMessages.slice().reverse().find((s) => progress >= s.at);
+        if (currentMsg && introStatusText) {
+          introStatusText.textContent = currentMsg.msg;
+        }
+      }
+    }, 28);
+
+    introCurtain.addEventListener('click', () => {
+      clearInterval(stepInterval);
+      completeIntro();
+    });
+  } else {
+    if (introCurtain) introCurtain.style.display = 'none';
+    triggerHeroEntrance();
+  }
+
+  /* ─── 0a. CURSOR GLOW INTERACTION ─────────────────────────────── */
+  const cursorGlow = document.getElementById('cursorGlow');
+  if (cursorGlow && !prefersReducedMotion) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    let active = false;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!active) {
+        cursorGlow.style.opacity = '1';
+        active = true;
+      }
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      cursorGlow.style.opacity = '0';
+      active = false;
+    });
+
+    const renderCursorGlow = () => {
+      currentX += (mouseX - currentX) * 0.14;
+      currentY += (mouseY - currentY) * 0.14;
+      cursorGlow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(renderCursorGlow);
+    };
+    renderCursorGlow();
+  }
+
+  /* ─── 0b. NAVBAR SCROLL GLASSMORPHISM ───────────────────────────── */
+  if (globalNav) {
+    const handleNavScroll = () => {
+      if (window.scrollY > 30) {
+        globalNav.classList.add('scrolled');
+      } else {
+        globalNav.classList.remove('scrolled');
+      }
+    };
+    handleNavScroll();
+    window.addEventListener('scroll', handleNavScroll, { passive: true });
+  }
+
+  /* ─── 0d. WORD-BY-WORD HEADLINE REVEAL ──────────────────────────── */
+  const setupWordReveal = () => {
+    if (prefersReducedMotion) return;
+    const titleElements = document.querySelectorAll('.section-title');
+    titleElements.forEach((title) => {
+      const words = title.innerText.trim().split(/\s+/);
+      title.innerHTML = words
+        .map((w) => `<span class="word-wrap"><span class="word-inner">${w}</span></span>`)
+        .join(' ');
+    });
+
+    if ('IntersectionObserver' in window) {
+      const wordObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const inners = entry.target.querySelectorAll('.word-inner');
+              inners.forEach((inner, i) => {
+                setTimeout(() => {
+                  inner.classList.add('revealed');
+                }, i * 55);
+              });
+              wordObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      );
+      titleElements.forEach((t) => wordObserver.observe(t));
+    } else {
+      document.querySelectorAll('.word-inner').forEach((el) => el.classList.add('revealed'));
+    }
+  };
+  setupWordReveal();
+
+  /* ─── 0e. MULTI-TIER SCROLL-DRIVEN PARALLAX (0.3x, 0.6x, 1.0x) ──── */
+  if (!prefersReducedMotion) {
+    const parallaxElements = document.querySelectorAll(
+      '[data-parallax-speed], .case-mockup-frame, .game-canvas-wrapper'
+    );
+    const onScrollParallax = () => {
+      const vh = window.innerHeight;
+      parallaxElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < vh && rect.bottom > 0) {
+          if (el.classList.contains('unmask-reveal') && !el.classList.contains('in-view')) {
+            return;
+          }
+          const speed = parseFloat(el.dataset.parallaxSpeed) || 0.35;
+          const progress = (rect.top + rect.height / 2 - vh / 2) / (vh / 2);
+          const offsetY = progress * -32 * speed;
+          el.style.transform = `translate3d(0, ${offsetY.toFixed(1)}px, 0)`;
+        }
+      });
+    };
+    window.addEventListener('scroll', onScrollParallax, { passive: true });
+  }
+
+  /* ─── 0f. TEXT SCRAMBLE REVEAL ──────────────────────────────────── */
+  const scrambleTargets = document.querySelectorAll('[data-scramble]');
+  if (scrambleTargets.length && !prefersReducedMotion) {
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&';
+    const scrambleEl = (el) => {
+      const target = el.dataset.scramble;
+      const len = target.length;
+      let frame = 0;
+      const totalFrames = len * 3.5;
+
+      const tick = () => {
+        let output = '';
+        for (let i = 0; i < len; i++) {
+          if (frame > i * 3) {
+            output += target[i];
+          } else {
+            output += CHARS[Math.floor(Math.random() * CHARS.length)];
+          }
+        }
+        el.textContent = output;
+        frame++;
+        if (frame <= totalFrames) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = target;
+        }
+      };
+
+      setTimeout(() => requestAnimationFrame(tick), 400);
+    };
+
+    scrambleTargets.forEach(scrambleEl);
+  }
+
+  /* ─── 0g. NUMBER COUNTER ANIMATION ──────────────────────────────── */
+  const counterEls = document.querySelectorAll('[data-count-to]');
+  if (counterEls.length && 'IntersectionObserver' in window) {
+    const animateCounter = (el) => {
+      const target = parseFloat(el.dataset.countTo);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1400;
+      const start = performance.now();
+      const isNeg = target < 0;
+      const absTarget = Math.abs(target);
+
+      el.classList.add('counting');
+
+      const tick = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        const current = absTarget * eased;
+        const display = isNeg ? `-${current.toFixed(decimals)}` : current.toFixed(decimals);
+        el.textContent = `${display}${suffix}`;
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = `${isNeg ? '-' : ''}${absTarget.toFixed(decimals)}${suffix}`;
+          el.classList.remove('counting');
+        }
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    const counterObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    counterEls.forEach((el) => counterObserver.observe(el));
+  }
+
 
   const addSpotlightEffect = (card) => {
     card.addEventListener('mousemove', (e) => {
@@ -34,33 +338,28 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.querySelectorAll('.spotlight-card').forEach(addSpotlightEffect);
 
-  /* ─── 1b. MAGNETIC PRIMARY CTAs ─────────────────────────────────── */
+  /* ─── 1b. MAGNETIC PRIMARY & SECONDARY CTAs ──────────────────────── */
   if (!prefersReducedMotion) {
-    const magneticRadius = 70;
     document.querySelectorAll('.apple-btn-primary, .apple-btn-secondary').forEach((btn) => {
-      document.addEventListener('mousemove', (e) => {
+      btn.addEventListener('mousemove', (e) => {
         const rect = btn.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist < magneticRadius) {
-          const pull = (1 - dist / magneticRadius) * 0.35;
-          btn.style.transform = `translate(${dx * pull}px, ${dy * pull}px)`;
-        } else {
-          btn.style.transform = '';
-        }
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.28}px, ${y * 0.28}px) scale(1.04)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
       });
     });
   }
 
   /* ─── 1c. SCROLL-LINKED REVEAL ANIMATIONS ───────────────────────── */
   const revealTargets = document.querySelectorAll(
-    '.apple-card, .case-study-card, .info-box, .estimator-wrapper, .game-chassis, .github-project-card'
+    '.apple-card, .case-study-card, .info-box, .estimator-wrapper, .game-chassis, .github-project-card, .section-header'
   );
   revealTargets.forEach((el) => el.classList.add('reveal'));
+
+  const unmaskTargets = document.querySelectorAll('.unmask-reveal');
 
   if ('IntersectionObserver' in window && !prefersReducedMotion) {
     const revealObserver = new IntersectionObserver(
@@ -75,8 +374,10 @@ document.addEventListener('DOMContentLoaded', () => {
       { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
     );
     revealTargets.forEach((el) => revealObserver.observe(el));
+    unmaskTargets.forEach((el) => revealObserver.observe(el));
   } else {
     revealTargets.forEach((el) => el.classList.add('in-view'));
+    unmaskTargets.forEach((el) => el.classList.add('in-view'));
   }
 
   /* ─── 1d. LIVE TELEMETRY PILL (nav) ─────────────────────────────── */
@@ -154,18 +455,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ─── 3. HERO INTERACTIVE 3D NEURAL CORE VISUALIZER ───────────── */
-  let triggerNeuralSurge = () => {};
+  /* ─── 3. OPENAI ASTRA 3D SPIRAL GALAXY VORTEX ENGINE ─────────── */
   const canvas = document.getElementById('neuralCoreCanvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
     let width = 0;
     let height = 0;
     let mouse = { x: 0, y: 0, targetX: 0, targetY: 0, isOver: false };
+    const heroSection = document.getElementById('hero') || canvas;
 
     const resizeCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const rect = heroSection.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
       canvas.width = width * dpr;
@@ -176,58 +477,159 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
       mouse.targetX = e.clientX - rect.left - width / 2;
       mouse.targetY = e.clientY - rect.top - height / 2;
       mouse.isOver = true;
     });
 
-    canvas.addEventListener('mouseleave', () => {
+    heroSection.addEventListener('mouseleave', () => {
       mouse.targetX = 0;
       mouse.targetY = 0;
       mouse.isOver = false;
     });
 
-    // Generate 3D Spherical Node Lattice
-    const nodeCount = 84;
-    const nodes = [];
-    const radius = 130;
+    // Generate high-performance offscreen particle sprites with glowing halos
+    const createSprite = (radius, stops) => {
+      const sCanvas = document.createElement('canvas');
+      const size = radius * 2;
+      sCanvas.width = size;
+      sCanvas.height = size;
+      const sCtx = sCanvas.getContext('2d');
+      const grad = sCtx.createRadialGradient(radius, radius, 0, radius, radius, radius);
+      stops.forEach(([offset, color]) => grad.addColorStop(offset, color));
+      sCtx.fillStyle = grad;
+      sCtx.beginPath();
+      sCtx.arc(radius, radius, radius, 0, Math.PI * 2);
+      sCtx.fill();
+      return sCanvas;
+    };
 
-    for (let i = 0; i < nodeCount; i++) {
-      const phi = Math.acos(-1 + (2 * i) / nodeCount);
-      const theta = Math.sqrt(nodeCount * Math.PI) * phi;
-      nodes.push({
-        x: radius * Math.cos(theta) * Math.sin(phi),
-        y: radius * Math.sin(theta) * Math.sin(phi),
-        z: radius * Math.cos(phi),
-        baseX: radius * Math.cos(theta) * Math.sin(phi),
-        baseY: radius * Math.sin(theta) * Math.sin(phi),
-        baseZ: radius * Math.cos(phi),
-        origX: radius * Math.cos(theta) * Math.sin(phi),
-        origY: radius * Math.sin(theta) * Math.sin(phi),
-        origZ: radius * Math.cos(phi),
-        phase: Math.random() * Math.PI * 2,
-        color: ['#6366f1', '#06b6d4', '#ec4899', '#ffffff'][i % 4]
+    const sprites = {
+      core: createSprite(22, [
+        [0.0, 'rgba(255, 255, 255, 1.0)'],
+        [0.25, 'rgba(255, 255, 255, 0.95)'],
+        [0.55, 'rgba(224, 242, 254, 0.55)'],
+        [0.8, 'rgba(56, 189, 248, 0.20)'],
+        [1.0, 'rgba(0, 0, 0, 0)']
+      ]),
+      white: createSprite(16, [
+        [0.0, 'rgba(255, 255, 255, 1.0)'],
+        [0.3, 'rgba(255, 255, 255, 0.85)'],
+        [0.6, 'rgba(240, 249, 255, 0.35)'],
+        [1.0, 'rgba(0, 0, 0, 0)']
+      ]),
+      cyan: createSprite(18, [
+        [0.0, 'rgba(255, 255, 255, 1.0)'],
+        [0.25, 'rgba(103, 232, 249, 0.95)'],
+        [0.6, 'rgba(56, 189, 248, 0.45)'],
+        [0.85, 'rgba(14, 165, 233, 0.15)'],
+        [1.0, 'rgba(0, 0, 0, 0)']
+      ]),
+      amber: createSprite(18, [
+        [0.0, 'rgba(255, 255, 255, 1.0)'],
+        [0.25, 'rgba(254, 215, 170, 0.95)'],
+        [0.6, 'rgba(245, 158, 11, 0.50)'],
+        [0.85, 'rgba(217, 119, 6, 0.15)'],
+        [1.0, 'rgba(0, 0, 0, 0)']
+      ]),
+      dust: createSprite(8, [
+        [0.0, 'rgba(255, 255, 255, 0.85)'],
+        [0.45, 'rgba(200, 225, 255, 0.35)'],
+        [1.0, 'rgba(0, 0, 0, 0)']
+      ])
+    };
+
+    // Build the 3D Logarithmic Spiral Galaxy Particle System
+    const totalStars = 2200;
+    const galaxyStars = [];
+    const numArms = 2;
+    const maxRadius = 390;
+
+    for (let i = 0; i < totalStars; i++) {
+      const isCore = i < 460;
+      if (isCore) {
+        // High density central galactic core
+        const r = 58 * Math.pow(Math.random(), 1.6);
+        const theta = Math.random() * Math.PI * 2;
+        const y = (Math.random() - 0.5) * 26 * (1 - r / 60);
+        let sprite = sprites.core;
+        if (Math.random() < 0.25) sprite = sprites.amber;
+        else if (Math.random() < 0.25) sprite = sprites.cyan;
+        else if (Math.random() < 0.35) sprite = sprites.white;
+
+        galaxyStars.push({
+          r,
+          baseR: r,
+          theta,
+          baseTheta: theta,
+          spreadX: 0,
+          spreadZ: 0,
+          y,
+          sprite,
+          baseSize: 10 + Math.random() * 16,
+          isCore: true,
+          rotSpeed: 0.0075 / (1 + r * 0.02)
+        });
+      } else {
+        // Spiral Arms with Clustered Stellar Nurseries
+        const armIndex = i % numArms;
+        const armOffset = armIndex * Math.PI;
+        const t = Math.pow(Math.random(), 0.82);
+        const r = 36 + (maxRadius - 36) * t;
+        const theta = armOffset + 3.25 * Math.pow(t, 0.72) + (Math.random() - 0.5) * 0.28;
+        const spreadMag = (10 + 36 * t) * (Math.random() - 0.5);
+        const y = (Math.random() - 0.5) * (14 + 32 * t);
+
+        // Color palette based on radial position
+        let sprite = sprites.white;
+        const roll = Math.random();
+        if (t < 0.35) {
+          sprite = roll < 0.45 ? sprites.amber : (roll < 0.75 ? sprites.white : sprites.cyan);
+        } else {
+          sprite = roll < 0.52 ? sprites.cyan : (roll < 0.82 ? sprites.white : (roll < 0.94 ? sprites.amber : sprites.dust));
+        }
+
+        const baseSize = roll < 0.08 ? 16 + Math.random() * 12 : (roll < 0.5 ? 8 + Math.random() * 9 : 4 + Math.random() * 6);
+
+        galaxyStars.push({
+          r,
+          baseR: r,
+          theta,
+          baseTheta: theta,
+          spreadX: spreadMag * Math.cos(theta + Math.PI / 2),
+          spreadZ: spreadMag * Math.sin(theta + Math.PI / 2),
+          y,
+          sprite,
+          baseSize,
+          isCore: false,
+          rotSpeed: 0.0048 / (1 + r * 0.0075)
+        });
+      }
+    }
+
+    // Distant Deep-Space Background Stars
+    const bgStars = [];
+    for (let i = 0; i < 180; i++) {
+      bgStars.push({
+        x: (Math.random() - 0.5) * 1600,
+        y: (Math.random() - 0.5) * 1000,
+        size: 1 + Math.random() * 2.2,
+        twinklePhase: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.02 + Math.random() * 0.03,
+        baseAlpha: 0.25 + Math.random() * 0.65
       });
     }
 
-    let angleX = 0;
-    let angleY = 0;
-    let prevMouseX = 0;
-    let prevMouseY = 0;
-    let surge = 0; // decays over time — boosted by clicks / easter-egg triggers
-
-    // Expanding energy-ripple rings, spawned on click
+    // Supernova energy shockwaves
     const ripples = [];
-    canvas.addEventListener('click', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      ripples.push({ x: e.clientX - rect.left, y: e.clientY - rect.top, r: 4, alpha: 0.9 });
-      surge = 1;
+    heroSection.addEventListener('click', (e) => {
+      if (e.target.closest('a, button')) return;
+      ripples.push({ r: 6, maxR: 480, alpha: 1.0, speed: 12 });
     });
     triggerNeuralSurge = () => {
-      ripples.push({ x: width / 2, y: height / 2, r: 4, alpha: 0.9 });
-      surge = 1;
+      ripples.push({ r: 6, maxR: 480, alpha: 1.0, speed: 12 });
     };
 
     let heroCanvasInView = true;
@@ -239,118 +641,140 @@ document.addEventListener('DOMContentLoaded', () => {
       heroObserver.observe(canvas);
     }
 
-    const renderNeuralCore = () => {
-      requestAnimationFrame(renderNeuralCore);
+    // Camera angles & tilt
+    let currentTiltX = 0;
+    let currentTiltY = 0;
+    const basePitch = 0.98; // ~56 degrees tilt
+    const baseRoll = -0.22; // ~-13 degrees roll
+
+    const renderGalaxy = () => {
+      requestAnimationFrame(renderGalaxy);
       if (!width || !height || !heroCanvasInView) return;
 
       ctx.clearRect(0, 0, width, height);
 
-      const time = performance.now() * 0.001;
+      // Smooth mouse tilt interpolation
+      currentTiltX += ((mouse.targetX / width) * 0.45 - currentTiltX) * 0.05;
+      currentTiltY += ((mouse.targetY / height) * 0.35 - currentTiltY) * 0.05;
 
-      // Smooth mouse interpolation + velocity (drives the "repel/attract" breathing)
-      mouse.x += (mouse.targetX - mouse.x) * 0.05;
-      mouse.y += (mouse.targetY - mouse.y) * 0.05;
-      const velocity = Math.min(1, Math.hypot(mouse.x - prevMouseX, mouse.y - prevMouseY) / 14);
-      prevMouseX = mouse.x;
-      prevMouseY = mouse.y;
+      const pitch = basePitch + currentTiltY;
+      const roll = baseRoll + currentTiltX;
+      const cosB = Math.cos(pitch);
+      const sinB = Math.sin(pitch);
+      const cosG = Math.cos(roll);
+      const sinG = Math.sin(roll);
 
-      angleY += 0.006 + mouse.x * 0.00003;
-      angleX += 0.004 + mouse.y * 0.00003;
-      surge *= 0.94;
-
-      const cosX = Math.cos(angleX);
-      const sinX = Math.sin(angleX);
-      const cosY = Math.cos(angleY);
-      const sinY = Math.sin(angleY);
-
-      const fov = 340;
       const centerX = width / 2;
       const centerY = height / 2;
+      const responsiveScale = Math.min(1.25, Math.min(width, height) / 640);
+      const fov = 520;
+      const cameraZ = 560;
 
-      // Harmonic sine-wave drift with responsive scaling to fit mobile/tablet canvas
-      const responsiveScale = Math.min(1, Math.min(width * 0.32, height * 0.42) / 130);
-      nodes.forEach((node) => {
-        const wobble = (1 + Math.sin(time * 0.7 + node.phase) * 0.025 + velocity * 0.06 + surge * 0.18) * responsiveScale;
-        node.origX = node.baseX * wobble;
-        node.origY = node.baseY * wobble;
-        node.origZ = node.baseZ * wobble;
+      // 1. Draw Distant Background Starfield
+      ctx.fillStyle = '#ffffff';
+      bgStars.forEach((star) => {
+        star.twinklePhase += star.twinkleSpeed;
+        const alpha = Math.max(0.1, Math.min(1, star.baseAlpha + Math.sin(star.twinklePhase) * 0.3));
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        ctx.arc(centerX + star.x * responsiveScale, centerY + star.y * responsiveScale, star.size, 0, Math.PI * 2);
+        ctx.fill();
       });
+      ctx.globalAlpha = 1.0;
 
-      // Project 3D to 2D
-      const projected = nodes.map((node) => {
-        // Rotate around Y
-        let x1 = node.origX * cosY - node.origZ * sinY;
-        let z1 = node.origZ * cosY + node.origX * sinY;
+      // Switch to additive blending for brilliant stellar luminescence
+      ctx.globalCompositeOperation = 'lighter';
 
-        // Rotate around X
-        let y2 = node.origY * cosX - z1 * sinX;
-        let z2 = z1 * cosX + node.origY * sinX;
+      // 2. Draw Radiant Galactic Core Bloom
+      const coreRadius = 210 * responsiveScale;
+      const coreBloom = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, coreRadius);
+      coreBloom.addColorStop(0.0, 'rgba(255, 255, 255, 0.95)');
+      coreBloom.addColorStop(0.14, 'rgba(255, 255, 255, 0.85)');
+      coreBloom.addColorStop(0.35, 'rgba(224, 242, 254, 0.50)');
+      coreBloom.addColorStop(0.60, 'rgba(56, 189, 248, 0.22)');
+      coreBloom.addColorStop(0.82, 'rgba(245, 158, 11, 0.08)');
+      coreBloom.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = coreBloom;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
+      ctx.fill();
 
-        // Perspective scale
-        const scale = fov / (fov + z2);
-        return {
-          x: centerX + x1 * scale,
-          y: centerY + y2 * scale,
-          scale,
-          z: z2,
-          color: node.color
-        };
-      });
-
-      // Sort by depth (painters algorithm)
-      projected.sort((a, b) => a.z - b.z);
-
-      // Draw Connections
-      ctx.lineWidth = 0.8;
-      for (let i = 0; i < projected.length; i++) {
-        for (let j = i + 1; j < projected.length; j++) {
-          const p1 = projected[i];
-          const p2 = projected[j];
-          const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-          if (dist < 65) {
-            const alpha = (1 - dist / 65) * 0.28 * Math.min(p1.scale, p2.scale);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw expanding energy-ripple rings (from clicks / easter egg)
+      // 3. Render and Update Expanding Energy Supernova Shockwaves
       for (let i = ripples.length - 1; i >= 0; i--) {
         const rp = ripples[i];
-        rp.r += 6.5;
-        rp.alpha *= 0.955;
-        if (rp.alpha < 0.02) {
+        rp.r += rp.speed;
+        rp.alpha *= 0.96;
+        if (rp.alpha < 0.02 || rp.r > rp.maxR * responsiveScale) {
           ripples.splice(i, 1);
           continue;
         }
-        ctx.strokeStyle = `rgba(6, 182, 212, ${rp.alpha})`;
-        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = `rgba(103, 232, 249, ${rp.alpha * 0.7})`;
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+        ctx.ellipse(centerX, centerY, rp.r, rp.r * 0.58, roll, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = `rgba(255, 255, 255, ${rp.alpha * 0.9})`;
+        ctx.lineWidth = 1.2;
         ctx.stroke();
       }
 
-      // Draw Glowing Nodes
-      projected.forEach((p) => {
-        const r = Math.max(1.8, 3.2 * p.scale);
-        const alpha = Math.min(1, Math.max(0.2, (p.z + radius) / (radius * 2)));
+      // 4. Update and Project 3D Galaxy Particles
+      const projected = [];
+      const len = galaxyStars.length;
 
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = p.scale > 0.9 ? 6 : 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-        ctx.fill();
-      });
+      for (let i = 0; i < len; i++) {
+        const p = galaxyStars[i];
 
-      ctx.shadowBlur = 0;
+        // Differential rotation: inner stars orbit faster
+        p.theta += p.rotSpeed;
+
+        // Position on disc plane
+        const px = (p.r * Math.cos(p.theta) + p.spreadX) * responsiveScale;
+        const pz = (p.r * Math.sin(p.theta) + p.spreadZ) * responsiveScale;
+        const py = p.y * responsiveScale;
+
+        // 3D Pitch tilt (around X)
+        const y2 = py * cosB - pz * sinB;
+        const z2 = pz * cosB + py * sinB;
+
+        // 3D Roll tilt (around Z)
+        const x3 = px * cosG - y2 * sinG;
+        const y3 = y2 * cosG + px * sinG;
+        const z3 = z2;
+
+        // Camera perspective projection
+        const depth = z3 + cameraZ;
+        const scale = fov / (fov + depth);
+        const screenX = centerX + x3 * scale;
+        const screenY = centerY + y3 * scale;
+
+        projected.push({
+          x: screenX,
+          y: screenY,
+          z: depth,
+          scale,
+          sprite: p.sprite,
+          size: p.baseSize * scale * responsiveScale
+        });
+      }
+
+      // Depth sort (render farther stars first)
+      projected.sort((a, b) => b.z - a.z);
+
+      // 5. Draw All Stars Using Offscreen Sprites
+      const pLen = projected.length;
+      for (let i = 0; i < pLen; i++) {
+        const pt = projected[i];
+        const s = pt.size;
+        ctx.drawImage(pt.sprite, pt.x - s / 2, pt.y - s / 2, s, s);
+      }
+
+      // Reset composite operation
+      ctx.globalCompositeOperation = 'source-over';
     };
 
-    renderNeuralCore();
+    renderGalaxy();
   }
 
   /* ─── 4. HANDS-ON DEMO: MULTI-AGENT STEP SIMULATOR ─────────────── */
@@ -766,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gCtx.shadowBlur = 0;
       agent.trail.forEach((pt, idx) => {
         const alpha = (idx + 1) / agent.trail.length * 0.4;
-        gCtx.fillStyle = `rgba(6, 182, 212, ${alpha})`;
+        gCtx.fillStyle = `rgba(16, 163, 127, ${alpha})`;
         gCtx.beginPath();
         gCtx.arc(pt.x, pt.y, agent.radius * 0.7, 0, Math.PI * 2);
         gCtx.fill();
@@ -774,14 +1198,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Draw Agent Core
       gCtx.fillStyle = '#ffffff';
-      gCtx.shadowColor = '#06b6d4';
+      gCtx.shadowColor = '#10a37f';
       gCtx.shadowBlur = 14;
       gCtx.beginPath();
       gCtx.arc(agent.x, agent.y, agent.radius, 0, Math.PI * 2);
       gCtx.fill();
 
       // Outer Agent Ring
-      gCtx.strokeStyle = '#6366f1';
+      gCtx.strokeStyle = '#10a37f';
       gCtx.lineWidth = 2;
       gCtx.beginPath();
       gCtx.arc(agent.x, agent.y, agent.radius + 4, 0, Math.PI * 2);
