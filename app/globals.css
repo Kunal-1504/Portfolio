@@ -32,11 +32,25 @@
   box-sizing: border-box;
 }
 body {
+  isolation: isolate;
   margin: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: Inter, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+.cursor-background {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-background {
+    display: none;
+  }
 }
 button,
 a,
