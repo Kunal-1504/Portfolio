@@ -2,9 +2,16 @@
 
 Created with the built-in image generation tool on 2 October 2026.
 
-Current asset: `public/avatar-kunal-passport.png`. Earlier avatars are preserved.
+Current asset: `public/avatar-kunal-memoji.png`. Earlier avatars are preserved.
+
+## Floating-head revision from the supplied screencast
+
+Mode: built-in image generation. Saved asset: `public/avatar-kunal-memoji.png`.
+
+Edit image 1, the original 3D CARTOON avatar. Preserve its cartoon rendering exactly: smooth simplified sculpted skin, large expressive cartoon eyes, rounded stylized geometry and grouped cartoon hair locks. Image 2 is the identity reference: Kunal's personalized avatar. Transfer Kunal's face shape, skin tone, black upswept hairstyle and friendly smile from image 2 into image 1's cartoon style. Remove the glasses and beard. Do not make a realistic photographic face.
+Deliver ONLY a floating head, a phone-style memoji sticker. Remove all body, shoulders, shirt, neck, arms and hands. The head ends at the chin. Entire hair, ears and chin visible, slight three-quarter turn toward viewer, cheerful subtle smile. Friendly simplified animated character, strongly stylized and clearly not photorealistic. Square canvas, centered floating head with transparent padding on all sides. Actual transparent alpha background. No text, no props, no shadow, no neck.
 The shared Avatar component uses this asset on the homepage and in chat.
-The current output was visually inspected for likeness, passport-style framing, and a transparent background. The user replaced the earlier waving-pose request with a head-and-shoulders portrait.
+The current output was visually inspected for likeness, cartoon style, floating-head framing, and a transparent background. The supplied screencast supersedes the earlier head-and-shoulders framing.
 
 ## Current head-and-shoulders avatar prompt
 

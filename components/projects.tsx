@@ -5,7 +5,6 @@ import { portfolio } from "@/data/portfolio";
 import { projectStories } from "@/data/project-stories";
 import { ProjectArt } from "@/components/project-art";
 import { ProjectDetail } from "@/components/project-detail";
-import { GitHubActivity } from "@/components/github-activity";
 import { useLiveData } from "@/components/live-data";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 export function Projects() {
@@ -179,7 +178,6 @@ export function Projects() {
           ))}
         </div>
       </div>
-      <GitHubActivity />
     </section>
   );
 }

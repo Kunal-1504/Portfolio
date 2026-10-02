@@ -46,6 +46,19 @@ body {
   height: 100%;
   z-index: -1;
   pointer-events: none;
+  opacity: 0.65;
+  mix-blend-mode: multiply;
+}
+.fluid-surface {
+  width: 100%;
+  height: 100%;
+}
+.fluid-surface canvas {
+  display: block;
+}
+.dark .cursor-background {
+  mix-blend-mode: screen;
+  opacity: 0.5;
 }
 @media (prefers-reduced-motion: reduce) {
   .cursor-background {
@@ -137,6 +150,55 @@ a {
   align-items: center;
   gap: 14px;
 }
+.header-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.build-portfolio-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--card) 80%, transparent);
+  padding: 9px 12px;
+  font-size: 11px;
+}
+.build-portfolio-trigger:hover {
+  border-color: var(--accent);
+}
+.portfolio-build-steps {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+.portfolio-build-steps strong {
+  display: block;
+  font-size: 14px;
+}
+.portfolio-build-steps span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+@media (max-width: 640px) {
+  .header-brand-group {
+    gap: 10px;
+  }
+  .header-brand-group .brand {
+    display: none;
+  }
+  .build-portfolio-trigger {
+    gap: 5px;
+    padding: 8px;
+    font-size: 10px;
+  }
+}
 .header-divider {
   height: 17px;
   width: 1px;
@@ -169,7 +231,7 @@ a {
     radial-gradient(ellipse at 68% 52%, #dad8f3 0%, transparent 60%),
     radial-gradient(ellipse at 45% 80%, #e3ecdf 0%, transparent 60%);
   filter: blur(54px);
-  opacity: 0.62;
+  opacity: 0.15;
 }
 .dark .hero-glow {
   opacity: 0.16;
@@ -252,7 +314,7 @@ a {
   object-position: center;
 }
 .avatar-wrap:after {
-  content: "";
+  content: none;
   position: absolute;
   bottom: 0;
   left: -5%;

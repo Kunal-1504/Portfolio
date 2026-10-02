@@ -3,7 +3,6 @@ import { useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, MapPin } from "lucide-react";
-import { GitHubActivity } from "@/components/github-activity";
 import { Avatar } from "@/components/avatar";
 import { ChatInput } from "@/components/chat-input";
 import { QuickQuestions } from "@/components/quick-questions";
@@ -88,24 +87,7 @@ export function Landing() {
             <ArrowUpRight size={12} />
           </motion.button>
           <motion.div variants={fade} className="hero-portrait">
-            <span className="portrait-note note-left">
-              Building things
-              <br />
-              that think.
-              <svg viewBox="0 0 70 40" aria-hidden="true">
-                <path d="M3 4 Q25 40 62 20 M52 17l11 3-5 10" />
-              </svg>
-            </span>
             <Avatar />
-            <span className="portrait-note note-right">
-              <span className="tiny-spark">✧</span>Your next big idea,
-              <br />
-              let’s build it.
-            </span>
-            <span className="avatar-caption">
-              <span className="status-dot" />
-              My AI twin. Your curiosity.
-            </span>
           </motion.div>
           <motion.div variants={fade} className="hero-interaction">
             <ChatInput home onSend={ask} disabled={pending} />
@@ -139,9 +121,6 @@ export function Landing() {
               <ArrowUpRight size={12} />
             </button>
           </motion.p>
-          <motion.div variants={fade} className="hero-live-data">
-            <GitHubActivity compact />
-          </motion.div>
         </motion.div>
       </main>
       <footer className="site-footer">

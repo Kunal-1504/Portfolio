@@ -5,6 +5,7 @@ import { ArrowUpRight, Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
 import { portfolio } from "@/data/portfolio";
+import { BuildPortfolio } from "@/components/build-portfolio";
 const subscribe = (callback: () => void) => {
   window.addEventListener("theme-change", callback);
   return () => window.removeEventListener("theme-change", callback);
@@ -25,14 +26,17 @@ export function SiteHeader() {
   }
   return (
     <header className="site-header">
-      <Link href="/" className="brand" aria-label="Kunal home">
-        <span className="brand-mark">
-          k<span>↗</span>
-        </span>
-        <span>
-          Kunal<span className="brand-period">.</span>
-        </span>
-      </Link>
+      <div className="header-brand-group">
+        <Link href="/" className="brand" aria-label="Kunal home">
+          <span className="brand-mark">
+            k<span>↗</span>
+          </span>
+          <span>
+            Kunal<span className="brand-period">.</span>
+          </span>
+        </Link>
+        <BuildPortfolio />
+      </div>
       <div className="header-actions">
         <Button
           variant="ghost"
