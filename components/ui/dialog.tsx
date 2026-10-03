@@ -1,7 +1,6 @@
 "use client";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import { motion } from "framer-motion";
 export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;
 export const DialogTitle = DialogPrimitive.Title;
@@ -15,20 +14,17 @@ export function DialogContent({
 }) {
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/35 backdrop-blur-sm" />
+      <DialogPrimitive.Overlay className="dialog-backdrop fixed inset-0 z-50 bg-black/55 backdrop-blur-sm" />
       <DialogPrimitive.Content
         aria-describedby={undefined}
-        className={`fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[calc(100%_-_2rem)] ${wide ? "max-w-4xl" : "max-w-xl"} -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain rounded-[28px] border border-border bg-card p-6 shadow-2xl sm:p-9`}
+        className={`dialog-panel fixed left-1/2 top-1/2 z-50 w-[calc(100%_-_2rem)] ${wide ? "max-w-4xl" : "max-w-xl"} rounded-[28px] border border-border bg-card shadow-2xl`}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+        <div className="dialog-scroll max-h-[90dvh] overflow-y-auto overscroll-contain p-6 sm:p-9">
           {children}
-        </motion.div>
+        </div>
         <DialogPrimitive.Close
           aria-label="Close details"
-          className="absolute right-4 top-4 rounded-full bg-muted p-2 hover:opacity-70"
+          className="dialog-close absolute right-4 top-4 z-10 rounded-full bg-foreground p-2 text-background shadow-lg hover:opacity-80"
         >
           <X size={18} />
         </DialogPrimitive.Close>

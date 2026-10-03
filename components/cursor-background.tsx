@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type WebGLFluidEnhanced from "webgl-fluid-enhanced";
 import { createFluidFallback } from "@/lib/fluid-fallback";
+import { FluidPointer } from "@/lib/fluid-pointer";
 
 // The fluid lives behind the page; global pointer listeners keep links clickable.
 export function CursorBackground() {
@@ -17,8 +18,23 @@ export function CursorBackground() {
     let disposed = false;
     let loading = false;
     let running = false;
-    let previous: { x: number; y: number; time: number } | undefined;
-    let lastSplat = 0;
+    const pointer = new FluidPointer();
+    let pointerPosition: { x: number; y: number } | undefined;
+    let inputFrame = 0;
+    let scrollImpulse = 0;
+    let hardware = false;
+
+    function resize() {
+      // Bound the display buffer to roughly one pixel per CSS pixel, even on
+      // Retina screens. The dye simulation has its own independent resolution.
+      const scale = hardware
+        ? Math.max(1, window.devicePixelRatio || 1, window.innerWidth / 1600)
+        : 1;
+      container!.style.width = `${100 / scale}%`;
+      container!.style.height = `${100 / scale}%`;
+      container!.style.transformOrigin = "top left";
+      container!.style.transform = `scale(${scale})`;
+    }
     let lastScroll = window.scrollY;
 
     function theme() {
@@ -32,6 +48,10 @@ export function CursorBackground() {
       if (reduced.matches || document.hidden) {
         fluid?.stop();
         running = false;
+        pointer.reset();
+        cancelAnimationFrame(inputFrame);
+        inputFrame = 0;
+        scrollImpulse = 0;
         return;
       }
       if (!fluid && !loading) {
@@ -39,27 +59,36 @@ export function CursorBackground() {
         try {
           const { default: Fluid } = await import("webgl-fluid-enhanced");
           if (disposed || reduced.matches || document.hidden) return;
+          hardware = true;
+          resize();
           const simulation = new Fluid(container!);
           fluid = simulation;
           simulation.setConfig({
             simResolution: 128,
-            dyeResolution: window.innerWidth < 640 ? 512 : 1024,
-            densityDissipation: 1.1,
-            velocityDissipation: 0.22,
+            dyeResolution: window.innerWidth < 640 ? 512 : 768,
+            densityDissipation: 0.85,
+            velocityDissipation: 0.3,
             pressure: 0.8,
-            pressureIterations: 16,
-            curl: 30,
-            splatRadius: 0.18,
+            pressureIterations: 12,
+            curl: 24,
+            splatRadius: 0.2,
             brightness: 0.12,
             hover: false,
-            shading: true,
+            shading: false,
             bloom: false,
             sunrays: false,
             transparent: false,
             backgroundColor: "#000000",
           });
+          simulation.start();
+          running = true;
+          container!.dataset.renderer = "webgl";
           theme();
         } catch {
+          fluid?.stop();
+          hardware = false;
+          resize();
+          container!.dataset.renderer = "canvas";
           fluid = createFluidFallback(container!);
           theme();
         } finally {
@@ -74,47 +103,82 @@ export function CursorBackground() {
 
     function splat(x: number, y: number, dx: number, dy: number) {
       if (!fluid || !running || reduced.matches) return;
-      const now = performance.now();
-      if (now - lastSplat < 16) return;
-      lastSplat = now;
       const canvas = container!.querySelector("canvas");
       if (!canvas) return;
-      // The library expects buffer pixels for x, but CSS pixels for y.
-      const scale = canvas.width / Math.max(1, canvas.clientWidth);
+      const bounds = canvas.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
+      // The library mixes buffer coordinates for x with layout pixels for y.
+      // Keep neighboring splats the same hue instead of randomizing every event.
+      const hue = performance.now() / 1300;
+      const color =
+        "#" +
+        [0, 2.094, 4.189]
+          .map((phase) =>
+            Math.round((Math.sin(hue + phase) + 1) * 15)
+              .toString(16)
+              .padStart(2, "0"),
+          )
+          .join("");
       fluid.splatAtLocation(
-        x * scale,
-        y,
-        Math.max(-1400, Math.min(1400, dx)),
-        Math.max(-1400, Math.min(1400, dy)),
+        ((x - bounds.left) / bounds.width) * canvas.width,
+        ((y - bounds.top) / bounds.height) * canvas.clientHeight,
+        Math.max(-1800, Math.min(1800, dx)),
+        Math.max(-1800, Math.min(1800, dy)),
+        color,
       );
     }
 
-    function move(event: PointerEvent) {
-      const now = performance.now();
-      const { clientX: x, clientY: y } = event;
-      if (previous && now - previous.time < 250) {
-        splat(x, y, (x - previous.x) * 15, (previous.y - y) * 15);
+    function flush() {
+      inputFrame = 0;
+      for (const point of pointer.drain()) {
+        splat(point.x, point.y, point.dx, point.dy);
       }
-      previous = { x, y, time: now };
+      if (scrollImpulse) {
+        splat(
+          pointerPosition?.x ?? window.innerWidth * 0.75,
+          pointerPosition?.y ?? window.innerHeight * 0.55,
+          0,
+          scrollImpulse * 5,
+        );
+        scrollImpulse = 0;
+      }
+    }
+
+    function schedule() {
+      if (!inputFrame && running) inputFrame = requestAnimationFrame(flush);
+    }
+
+    function move(event: PointerEvent) {
+      if (reduced.matches || document.hidden || !running) return;
+      pointerPosition = { x: event.clientX, y: event.clientY };
+      pointer.move(event.clientX, event.clientY, performance.now());
+      schedule();
     }
 
     function scroll() {
-      const delta = window.scrollY - lastScroll;
+      if (running) scrollImpulse += window.scrollY - lastScroll;
       lastScroll = window.scrollY;
-      const x = previous?.x ?? window.innerWidth * 0.75;
-      const y = previous?.y ?? window.innerHeight * 0.55;
-      splat(x, y, Math.sin(window.scrollY / 200) * 180, delta * 8);
+      schedule();
+    }
+
+    function leave() {
+      pointer.reset();
     }
 
     void sync();
     window.addEventListener("pointermove", move, { passive: true });
     window.addEventListener("scroll", scroll, { passive: true });
     window.addEventListener("theme-change", theme);
+    window.addEventListener("resize", resize, { passive: true });
+    document.addEventListener("pointerleave", leave);
     document.addEventListener("visibilitychange", sync);
     reduced.addEventListener("change", sync);
     return () => {
       disposed = true;
       fluid?.stop();
+      cancelAnimationFrame(inputFrame);
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("pointerleave", leave);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("scroll", scroll);
       window.removeEventListener("theme-change", theme);

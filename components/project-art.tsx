@@ -39,9 +39,9 @@ export function ProjectArt({ project }: { project: Project }) {
         <svg className="chart-art" viewBox="0 0 240 100">
           <path
             className="chart-area"
-            d="M0 75 Q25 78 40 60 T80 60 T120 35 T160 38 T200 17 T240 8 V100 H0Z"
+            d="M0 75 C20 78 25 62 40 60 S65 70 80 60 S100 33 120 35 S145 50 160 38 S185 30 200 17 S225 5 240 8 V100 H0Z"
           />
-          <path d="M0 75 Q25 78 40 60 T80 60 T120 35 T160 38 T200 17 T240 8" />
+          <path d="M0 75 C20 78 25 62 40 60 S65 70 80 60 S100 33 120 35 S145 50 160 38 S185 30 200 17 S225 5 240 8" />
           <path
             d="M0 91H240M0 52H240M0 13H240"
             style={{ stroke: "#ffffff80", strokeWidth: 1 }}

@@ -1,5 +1,6 @@
 "use client";
 import { useId, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -34,6 +35,7 @@ const icons = {
 };
 export function ProjectDetail({ project }: { project: Project }) {
   const story = projectStories[project.id];
+  const reduced = useReducedMotion();
   const [stage, setStage] = useState(0);
   const panelId = useId();
   const current = story.flow[stage];
@@ -50,8 +52,24 @@ export function ProjectDetail({ project }: { project: Project }) {
         <p>{story.summary}</p>
         <span className="project-status">{project.status}</span>
       </header>
-      <div className="case-overview">
+      <div className={`case-visual cover-${project.theme}`}>
+        <div className="case-visual-top">
+          <span>{project.category}</span>
+          <span>IMPLEMENTATION OVERVIEW</span>
+        </div>
+        <h3>{project.shortTitle}</h3>
         <ProjectArt project={project} />
+        <div className="case-visual-flow">
+          {story.flow.map((step, index) => (
+            <span key={step.label}>
+              <small>0{index + 1}</small>
+              {step.label}
+              {index < story.flow.length - 1 && <ArrowRight size={14} />}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="case-overview">
         <dl className="case-facts">
           {story.facts.map((fact) => (
             <div key={fact.label}>
@@ -95,7 +113,11 @@ export function ProjectDetail({ project }: { project: Project }) {
             );
           })}
         </div>
-        <div
+        <motion.div
+          key={stage}
+          initial={reduced ? false : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
           id={panelId}
           className="case-step-description"
           aria-live="polite"
@@ -106,7 +128,7 @@ export function ProjectDetail({ project }: { project: Project }) {
             <strong>{current.label}</strong>
             <p>{current.detail}</p>
           </div>
-        </div>
+        </motion.div>
       </section>
       <section className="case-section" aria-label="Key project findings">
         <div className="case-section-heading">

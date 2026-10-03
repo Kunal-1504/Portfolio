@@ -2,13 +2,12 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { portfolio } from "@/data/portfolio";
-import { projectStories } from "@/data/project-stories";
+
 import { ProjectArt } from "@/components/project-art";
 import { ProjectDetail } from "@/components/project-detail";
-import { useLiveData } from "@/components/live-data";
+
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 export function Projects() {
-  const { snapshot } = useLiveData();
   const ref = useRef<HTMLDivElement>(null);
   const id = useId();
   const [filter, setFilter] = useState("All");
@@ -90,15 +89,6 @@ export function Projects() {
         ))}
       </div>
       <div className="project-gallery-frame">
-        <button
-          className="gallery-arrow gallery-arrow-left"
-          aria-label="Previous projects"
-          aria-controls={id}
-          disabled={!position.previous}
-          onClick={() => scroll(-1)}
-        >
-          <ArrowLeft size={19} />
-        </button>
         <div
           id={id}
           className="project-carousel"
@@ -116,39 +106,29 @@ export function Projects() {
           }}
         >
           {projects.map((project) => {
-            const repo = snapshot.repositories.find(
-              (repo) => repo.url.toLowerCase() === project.github.toLowerCase(),
-            );
             return (
               <Dialog key={project.id}>
                 <DialogTrigger asChild>
                   <button
-                    className={`project-card ${project.id === "dms" ? "flagship-card" : ""}`}
+                    className={`project-card project-cover cover-${project.theme}`}
                     aria-label={`View ${project.title} details`}
                   >
-                    <ProjectArt project={project} />
-                    <div className="project-copy">
-                      <span className="eyebrow">{project.category}</span>
+                    <div className="cover-heading">
+                      <span>{project.category}</span>
                       <h3>{project.title}</h3>
-                      <p className="project-tagline">{project.shortTitle}</p>
-                      <span className="project-status">{project.status}</span>
-                      <div className="project-card-finding">
-                        {projectStories[project.id].findings[0].title}
-                      </div>
-                      {repo?.pushedAt && (
-                        <span className="project-live-note">
-                          Updated{" "}
-                          {new Date(repo.pushedAt).toLocaleDateString("en-GB", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                            timeZone: "UTC",
-                          })}
+                    </div>
+                    <ProjectArt project={project} />
+                    <div className="cover-bottom">
+                      <p>{project.shortTitle}</p>
+                      <div className="cover-link">
+                        <span>
+                          {project.id === "dms"
+                            ? "Flagship project"
+                            : "Explore the story"}
                         </span>
-                      )}
-                      <div className="project-card-cta">
-                        <span>Explore project</span>
-                        <ArrowUpRight size={17} />
+                        <span className="cover-open">
+                          <ArrowUpRight size={18} />
+                        </span>
                       </div>
                     </div>
                   </button>
@@ -160,22 +140,36 @@ export function Projects() {
             );
           })}
         </div>
-        <button
-          className="gallery-arrow gallery-arrow-right"
-          aria-label="Next projects"
-          aria-controls={id}
-          disabled={!position.next}
-          onClick={() => scroll(1)}
-        >
-          <ArrowRight size={19} />
-        </button>
       </div>
       <div className="gallery-footer">
-        <span>{projects.length} projects · Swipe or use the arrows</span>
-        <div className="gallery-progress" aria-hidden="true">
-          {projects.map((project, index) => (
-            <span key={project.id} data-active={index === position.active} />
-          ))}
+        <span>
+          {projects.length} {projects.length === 1 ? "project" : "projects"} ·
+          Swipe or use the arrows
+        </span>
+        <div className="gallery-controls">
+          <div className="gallery-progress" aria-hidden="true">
+            {projects.map((project, index) => (
+              <span key={project.id} data-active={index === position.active} />
+            ))}
+          </div>
+          <button
+            className="gallery-arrow"
+            aria-label="Previous projects"
+            aria-controls={id}
+            disabled={!position.previous}
+            onClick={() => scroll(-1)}
+          >
+            <ArrowLeft size={17} />
+          </button>
+          <button
+            className="gallery-arrow"
+            aria-label="Next projects"
+            aria-controls={id}
+            disabled={!position.next}
+            onClick={() => scroll(1)}
+          >
+            <ArrowRight size={17} />
+          </button>
         </div>
       </div>
     </section>

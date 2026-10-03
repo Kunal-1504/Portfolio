@@ -134,11 +134,13 @@ Reviewed through the connected GitHub plugin on October 1, 2026:
 - **[Society Compliance Copilot](https://github.com/Kunal-1504/society-compliance-copilot)** — verified against `backend/api.py`, `requirements.txt`, and the repository structure. Includes FastAPI, React, pgvector, document retrieval, and language handling.
 - **[Cognitive Guardian](https://github.com/Kunal-1504/cognitive-guardian)** — verified against README and `package.json` on its default `features/cognitive-guardian` branch. Explicitly presented as an experimental prototype, without claims of measured wellbeing outcomes.
 
-The project gallery includes category filters and distinct illustrations. Counts derive from shared data, and the flagship detail view includes architecture highlights.
+The project gallery uses portrait artwork covers, category filters, swipe/keyboard navigation, and arrow controls. Each card opens an animated, scrollable case study with a pinned close button, a large implementation graphic, verified findings, and interactive architecture steps. Reduced-motion preferences disable the decorative transitions.
+
+The cursor background batches pointer movement once per animation frame and interpolates fast strokes instead of discarding events. WebGL rendering uses a bounded display buffer and a 512/768 dye resolution. Browsers without WebGL use a low-resolution CPU fluid field with velocity projection and vorticity. Both paths stop when hidden or when reduced motion is requested.
 
 ## Live GitHub updates and skills explorer
 
-`GET /api/github` discovers up to 300 owned, public, non-fork, non-archived repositories from GitHub. Repository names, descriptions, primary languages, stars, and push timestamps refresh through a shared five-minute Next.js cache. The client checks every five minutes while visible, on tab visibility changes, and on manual refresh. The AI project tool uses the same data source. Newly published repositories appear automatically beneath the curated project gallery; private repositories and unverified personal claims are never automatically published.
+`GET /api/github` discovers up to 300 owned, public, non-fork, non-archived repositories from GitHub. Repository names, descriptions, primary languages, stars, and push timestamps refresh through a shared five-minute Next.js cache. The client checks every five minutes while visible, on tab visibility changes, and on manual refresh. The AI project tool uses the same data source. Newly published repositories are available to AI answers; the visible gallery remains curated. Private repositories and unverified personal claims are never automatically published.
 
 The homepage has an expandable GitHub activity panel. Known projects show their current push dates. Errors are labeled; the client retains its last successful snapshot rather than fabricating data. This public-data integration requires no GitHub token. The private flagship's reviewed description and personal profile facts remain curated in `data/portfolio.ts`.
 
