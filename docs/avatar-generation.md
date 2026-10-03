@@ -2,7 +2,11 @@
 
 Created with the built-in image generation tool on 2 October 2026.
 
-Current asset: `public/avatar-kunal-memoji.png`. Earlier avatars are preserved.
+Current asset: `public/avatar-kunal-selected.png`. Earlier avatars are preserved.
+
+## User-selected avatar — 4 October 2026
+
+The user selected the earlier natural floating-head version by screenshot. The original transparent generated PNG was reused directly, without regenerating or modifying the face. It is now saved as `public/avatar-kunal-selected.png` and used on both the homepage and in chat.
 
 ## Floating-head revision from the supplied screencast
 

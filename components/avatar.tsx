@@ -28,7 +28,7 @@ export function Avatar({
       }}
     >
       <Image
-        src={publicPath("/avatar-kunal-memoji.png")}
+        src={publicPath("/avatar-kunal-selected.png")}
         alt="Personalized floating-head avatar of Kunal Deshmukh"
         width={small ? 64 : 330}
         height={small ? 64 : 330}
