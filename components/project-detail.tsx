@@ -42,22 +42,12 @@ export function ProjectDetail({ project }: { project: Project }) {
   const Icon = icons[current.icon];
   return (
     <article className={`case-study case-${project.theme}`}>
-      <header className="case-header">
-        <span className="eyebrow">PROJECT DEEP DIVE</span>
-        <span className="case-evidence">
-          <BookOpen size={12} />
-          {story.evidence}
-        </span>
-        <DialogTitle>{project.title}</DialogTitle>
-        <p>{story.summary}</p>
-        <span className="project-status">{project.status}</span>
-      </header>
       <div className={`case-visual cover-${project.theme}`}>
         <div className="case-visual-top">
           <span>{project.category}</span>
           <span>IMPLEMENTATION OVERVIEW</span>
         </div>
-        <h3>{project.shortTitle}</h3>
+        <p className="case-visual-title">{project.shortTitle}</p>
         <ProjectArt project={project} />
         <div className="case-visual-flow">
           {story.flow.map((step, index) => (
@@ -69,6 +59,16 @@ export function ProjectDetail({ project }: { project: Project }) {
           ))}
         </div>
       </div>
+      <header className="case-header">
+        <span className="eyebrow">PROJECT DEEP DIVE</span>
+        <span className="case-evidence">
+          <BookOpen size={12} />
+          {story.evidence}
+        </span>
+        <DialogTitle>{project.title}</DialogTitle>
+        <p>{story.summary}</p>
+        <span className="project-status">{project.status}</span>
+      </header>
       <div className="case-overview">
         <dl className="case-facts">
           {story.facts.map((fact) => (

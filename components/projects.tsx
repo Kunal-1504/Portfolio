@@ -2,10 +2,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { portfolio } from "@/data/portfolio";
-
 import { ProjectArt } from "@/components/project-art";
 import { ProjectDetail } from "@/components/project-detail";
-
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 export function Projects() {
   const ref = useRef<HTMLDivElement>(null);
@@ -26,6 +24,7 @@ export function Projects() {
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+    node.scrollTo({ left: 0, behavior: "instant" });
     const update = () => {
       const card = node.querySelector<HTMLElement>(".project-card");
       const step = (card?.offsetWidth || 266) + 14;
@@ -47,7 +46,7 @@ export function Projects() {
       node.removeEventListener("scroll", update);
       cancelAnimationFrame(frame);
     };
-  }, [projects.length]);
+  }, [filter, projects.length]);
   function scroll(direction: number) {
     const node = ref.current;
     if (!node) return;
@@ -117,7 +116,15 @@ export function Projects() {
                       <span>{project.category}</span>
                       <h3>{project.title}</h3>
                     </div>
-                    <ProjectArt project={project} />
+                    <div className="cover-preview" aria-hidden="true">
+                      <div className="preview-toolbar">
+                        <i />
+                        <i />
+                        <i />
+                        <span>{project.artLabel}</span>
+                      </div>
+                      <ProjectArt project={project} />
+                    </div>
                     <div className="cover-bottom">
                       <p>{project.shortTitle}</p>
                       <div className="cover-link">
@@ -133,7 +140,7 @@ export function Projects() {
                     </div>
                   </button>
                 </DialogTrigger>
-                <DialogContent wide>
+                <DialogContent wide appearance="project">
                   <ProjectDetail project={project} />
                 </DialogContent>
               </Dialog>

@@ -8,16 +8,18 @@ export const DialogDescription = DialogPrimitive.Description;
 export function DialogContent({
   children,
   wide = false,
+  appearance = "default",
 }: {
   children: React.ReactNode;
   wide?: boolean;
+  appearance?: "default" | "project";
 }) {
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="dialog-backdrop fixed inset-0 z-50 bg-black/55 backdrop-blur-sm" />
       <DialogPrimitive.Content
         aria-describedby={undefined}
-        className={`dialog-panel fixed left-1/2 top-1/2 z-50 w-[calc(100%_-_2rem)] ${wide ? "max-w-4xl" : "max-w-xl"} rounded-[28px] border border-border bg-card shadow-2xl`}
+        className={`dialog-panel ${appearance === "project" ? "project-dialog" : ""} fixed left-1/2 top-1/2 z-50 w-[calc(100%_-_2rem)] ${wide ? "max-w-4xl" : "max-w-xl"} rounded-[28px] border border-border bg-card shadow-2xl`}
       >
         <div className="dialog-scroll max-h-[90dvh] overflow-y-auto overscroll-contain p-6 sm:p-9">
           {children}
