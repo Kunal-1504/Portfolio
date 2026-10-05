@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, MapPin } from "lucide-react";
 import { Avatar } from "@/components/avatar";
 import { ChatInput } from "@/components/chat-input";
@@ -14,7 +14,6 @@ const fade = {
 };
 export function Landing() {
   const router = useRouter();
-  const reduced = useReducedMotion();
   const [pending, startTransition] = useTransition();
   useEffect(() => {
     router.prefetch("/chat");
@@ -30,18 +29,12 @@ export function Landing() {
   return (
     <>
       <main id="main" className="landing">
-        <motion.div
+        <div
           className="hero-liquid-background"
           style={{
             backgroundImage: `url("${publicPath("/assets/hero-liquid-smoke-v1.png")}")`,
           }}
           aria-hidden="true"
-          animate={
-            reduced
-              ? {}
-              : { x: [-6, 6, -6], y: [0, 5, 0], scale: [1, 1.025, 1] }
-          }
-          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           className="hero-content"

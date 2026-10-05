@@ -136,7 +136,7 @@ Reviewed through the connected GitHub plugin on October 1, 2026:
 
 The project gallery uses portrait artwork covers, category filters, swipe/keyboard navigation, and arrow controls. Each card has a translucent preview surface and opens an animated dark case study with a pinned close button. A large implementation graphic leads into the existing explanation, verified findings, and interactive architecture steps. Reduced-motion preferences disable the decorative transitions.
 
-The cursor background batches pointer movement once per animation frame and interpolates fast strokes instead of discarding events. WebGL rendering uses a bounded display buffer and a 512/768 dye resolution. Browsers without WebGL use a low-resolution CPU fluid field with velocity projection and vorticity. Both paths stop when hidden or when reduced motion is requested.
+The hero uses a static pastel liquid-smoke image. The interactive cursor fluid is no longer mounted, so it does not load or run a simulation. The original fluid implementation remains in source for reference.
 
 ## Live GitHub updates and skills explorer
 

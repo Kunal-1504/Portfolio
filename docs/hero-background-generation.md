@@ -4,7 +4,7 @@
 - Asset: `public/assets/hero-liquid-smoke-v1.png`.
 - Output: 1672 × 941 PNG, approximately 16:9. Original output preserved without raster edits.
 - Placement: decorative landing-page backdrop; project cards, avatar and text are unchanged.
-- Animation: gentle transform drift; disabled for reduced motion. The separate pointer fluid uses low dye intensity and low turbulence, with no scroll-triggered splashes.
+- Display: static background image. Pointer fluid and image drift are disabled at the user's request.
 
 ## Final generation prompt
 

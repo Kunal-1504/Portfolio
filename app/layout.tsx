@@ -2,7 +2,6 @@ import { publicPath } from "@/lib/hosting";
 import type { Metadata } from "next";
 import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
-import { CursorBackground } from "@/components/cursor-background";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
@@ -56,7 +55,6 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <CursorBackground />
           <a href="#main" className="skip-link">
             Skip to content
           </a>
