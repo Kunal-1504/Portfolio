@@ -75,7 +75,7 @@ export function createFluidFallback(container: HTMLElement) {
     const dt = Math.min(0.025, (now - (last || now - 16)) / 1000);
     last = now;
     const velocityFade = Math.exp(-dt * 0.65);
-    const dyeFade = Math.exp(-dt * 0.9);
+    const dyeFade = Math.exp(-dt * 1.6);
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         const i = x + y * width;
@@ -107,7 +107,7 @@ export function createFluidFallback(container: HTMLElement) {
         const gx = Math.abs(divergence[i + 1]) - Math.abs(divergence[i - 1]);
         const gy =
           Math.abs(divergence[i + width]) - Math.abs(divergence[i - width]);
-        const force = (dt * 8 * divergence[i]) / (Math.hypot(gx, gy) + 0.001);
+        const force = (dt * 3 * divergence[i]) / (Math.hypot(gx, gy) + 0.001);
         u[i] = Math.max(-180, Math.min(180, u[i] + gy * force));
         v[i] = Math.max(-180, Math.min(180, v[i] - gx * force));
       }
@@ -188,10 +188,10 @@ export function createFluidFallback(container: HTMLElement) {
       lastInput = performance.now();
       const px = (x / canvas.width) * width;
       const py = (y / canvas.clientHeight) * height;
-      const radius = 3.2;
-      const hue = lastInput / 1200;
+      const radius = 4.8;
+      const hue = lastInput / 4500;
       const color = [0, 2.094, 4.189].map(
-        (phase) => (Math.sin(hue + phase) + 1) * 0.25,
+        (phase) => (Math.sin(hue + phase) + 1) * 0.09,
       );
       for (
         let iy = Math.max(0, Math.floor(py - radius * 3));
@@ -207,11 +207,11 @@ export function createFluidFallback(container: HTMLElement) {
           const amount = Math.exp(
             -((ix - px) ** 2 + (iy - py) ** 2) / (radius * radius),
           );
-          u[i] += dx * amount * 0.08;
-          v[i] -= dy * amount * 0.08;
-          red[i] = Math.min(1.5, red[i] + color[0] * amount);
-          green[i] = Math.min(1.5, green[i] + color[1] * amount);
-          blue[i] = Math.min(1.5, blue[i] + color[2] * amount);
+          u[i] += dx * amount * 0.035;
+          v[i] -= dy * amount * 0.035;
+          red[i] = Math.min(0.55, red[i] + color[0] * amount);
+          green[i] = Math.min(0.55, green[i] + color[1] * amount);
+          blue[i] = Math.min(0.55, blue[i] + color[2] * amount);
         }
       }
       if (!frame) {

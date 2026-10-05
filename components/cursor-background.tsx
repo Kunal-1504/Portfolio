@@ -19,9 +19,7 @@ export function CursorBackground() {
     let loading = false;
     let running = false;
     const pointer = new FluidPointer();
-    let pointerPosition: { x: number; y: number } | undefined;
     let inputFrame = 0;
-    let scrollImpulse = 0;
     let hardware = false;
 
     function resize() {
@@ -35,7 +33,6 @@ export function CursorBackground() {
       container!.style.transformOrigin = "top left";
       container!.style.transform = `scale(${scale})`;
     }
-    let lastScroll = window.scrollY;
 
     function theme() {
       fluid?.setConfig({
@@ -51,7 +48,6 @@ export function CursorBackground() {
         pointer.reset();
         cancelAnimationFrame(inputFrame);
         inputFrame = 0;
-        scrollImpulse = 0;
         return;
       }
       if (!fluid && !loading) {
@@ -66,12 +62,12 @@ export function CursorBackground() {
           simulation.setConfig({
             simResolution: 128,
             dyeResolution: window.innerWidth < 640 ? 512 : 768,
-            densityDissipation: 0.85,
-            velocityDissipation: 0.3,
+            densityDissipation: 1.6,
+            velocityDissipation: 0.65,
             pressure: 0.8,
             pressureIterations: 12,
-            curl: 24,
-            splatRadius: 0.2,
+            curl: 8,
+            splatRadius: 0.3,
             brightness: 0.12,
             hover: false,
             shading: false,
@@ -109,12 +105,12 @@ export function CursorBackground() {
       if (!bounds.width || !bounds.height) return;
       // The library mixes buffer coordinates for x with layout pixels for y.
       // Keep neighboring splats the same hue instead of randomizing every event.
-      const hue = performance.now() / 1300;
+      const hue = performance.now() / 4500;
       const color =
         "#" +
         [0, 2.094, 4.189]
           .map((phase) =>
-            Math.round((Math.sin(hue + phase) + 1) * 15)
+            Math.round((Math.sin(hue + phase) + 1) * 8)
               .toString(16)
               .padStart(2, "0"),
           )
@@ -122,8 +118,8 @@ export function CursorBackground() {
       fluid.splatAtLocation(
         ((x - bounds.left) / bounds.width) * canvas.width,
         ((y - bounds.top) / bounds.height) * canvas.clientHeight,
-        Math.max(-1800, Math.min(1800, dx)),
-        Math.max(-1800, Math.min(1800, dy)),
+        Math.max(-600, Math.min(600, dx * 0.45)),
+        Math.max(-600, Math.min(600, dy * 0.45)),
         color,
       );
     }
@@ -133,15 +129,6 @@ export function CursorBackground() {
       for (const point of pointer.drain()) {
         splat(point.x, point.y, point.dx, point.dy);
       }
-      if (scrollImpulse) {
-        splat(
-          pointerPosition?.x ?? window.innerWidth * 0.75,
-          pointerPosition?.y ?? window.innerHeight * 0.55,
-          0,
-          scrollImpulse * 5,
-        );
-        scrollImpulse = 0;
-      }
     }
 
     function schedule() {
@@ -150,14 +137,7 @@ export function CursorBackground() {
 
     function move(event: PointerEvent) {
       if (reduced.matches || document.hidden || !running) return;
-      pointerPosition = { x: event.clientX, y: event.clientY };
       pointer.move(event.clientX, event.clientY, performance.now());
-      schedule();
-    }
-
-    function scroll() {
-      if (running) scrollImpulse += window.scrollY - lastScroll;
-      lastScroll = window.scrollY;
       schedule();
     }
 
@@ -167,7 +147,6 @@ export function CursorBackground() {
 
     void sync();
     window.addEventListener("pointermove", move, { passive: true });
-    window.addEventListener("scroll", scroll, { passive: true });
     window.addEventListener("theme-change", theme);
     window.addEventListener("resize", resize, { passive: true });
     document.addEventListener("pointerleave", leave);
@@ -180,7 +159,6 @@ export function CursorBackground() {
       window.removeEventListener("resize", resize);
       document.removeEventListener("pointerleave", leave);
       window.removeEventListener("pointermove", move);
-      window.removeEventListener("scroll", scroll);
       window.removeEventListener("theme-change", theme);
       document.removeEventListener("visibilitychange", sync);
       reduced.removeEventListener("change", sync);

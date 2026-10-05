@@ -46,7 +46,7 @@ body {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.65;
+  opacity: 0.26;
   mix-blend-mode: multiply;
 }
 .fluid-surface {
@@ -58,7 +58,7 @@ body {
 }
 .dark .cursor-background {
   mix-blend-mode: screen;
-  opacity: 0.5;
+  opacity: 0.22;
 }
 @media (prefers-reduced-motion: reduce) {
   .cursor-background {
@@ -219,22 +219,29 @@ a {
   padding: 24px 24px 42px;
   overflow: hidden;
 }
-.hero-glow {
+.hero-liquid-background {
   position: absolute;
-  width: 680px;
-  height: 480px;
-  top: 12%;
-  left: calc(50% - 340px);
+  inset: -3% -2%;
   z-index: -1;
-  background:
-    radial-gradient(ellipse at 28% 38%, #f4dfc5 0%, transparent 55%),
-    radial-gradient(ellipse at 68% 52%, #dad8f3 0%, transparent 60%),
-    radial-gradient(ellipse at 45% 80%, #e3ecdf 0%, transparent 60%);
-  filter: blur(54px);
-  opacity: 0.15;
+  pointer-events: none;
+  background-position: center 35%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+  mask-image: linear-gradient(transparent, #000 14%, #000 82%, transparent);
 }
-.dark .hero-glow {
-  opacity: 0.16;
+.dark .hero-liquid-background {
+  mix-blend-mode: screen;
+  filter: invert(1) hue-rotate(180deg);
+  opacity: 0.24;
+}
+@media (max-width: 640px) {
+  .hero-liquid-background {
+    background-size: 170% auto;
+    background-position: center 20%;
+    opacity: 0.55;
+  }
 }
 .hero-content {
   width: 100%;

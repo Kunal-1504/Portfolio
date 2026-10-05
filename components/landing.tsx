@@ -7,6 +7,7 @@ import { Avatar } from "@/components/avatar";
 import { ChatInput } from "@/components/chat-input";
 import { QuickQuestions } from "@/components/quick-questions";
 import { portfolio } from "@/data/portfolio";
+import { publicPath } from "@/lib/hosting";
 const fade = {
   hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0, transition: { duration: 0.35 } },
@@ -30,14 +31,17 @@ export function Landing() {
     <>
       <main id="main" className="landing">
         <motion.div
-          className="hero-glow"
+          className="hero-liquid-background"
+          style={{
+            backgroundImage: `url("${publicPath("/assets/hero-liquid-smoke-v1.png")}")`,
+          }}
           aria-hidden="true"
           animate={
             reduced
               ? {}
-              : { x: [-12, 16, -12], y: [0, 12, 0], scale: [1, 1.07, 1] }
+              : { x: [-6, 6, -6], y: [0, 5, 0], scale: [1, 1.025, 1] }
           }
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           className="hero-content"
