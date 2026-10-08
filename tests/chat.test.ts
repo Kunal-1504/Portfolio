@@ -79,7 +79,7 @@ test("all tools expose grounded content, including local résumé", () => {
     toolData.getResume.url,
     "/assets/Kunal_Deshmukh_AI_Engineer_Resume_Optimized.docx",
   );
-  assert.equal(toolData.getProjects.length, 7);
+  assert.equal(toolData.getProjects.length, 8);
 });
 test("API rejects malformed and oversized payloads", async () => {
   const invalid = await POST(
@@ -379,6 +379,11 @@ test("flagship and newly added projects are discoverable without invented metric
   );
   assert.equal(previewAnswer("Cognitive Guardian").tool, "getProjects");
   assert.equal(previewAnswer("AI Interview Coach").tool, "getProjects");
+  assert.equal(previewAnswer("Tell me about Lakshya").tool, "getProjects");
+  assert.equal(
+    toolData.getProjects.find((project) => project.id === "lakshya")?.github,
+    "https://github.com/Kunal-1504/Lakshya-AI-Job-search",
+  );
   assert.equal(
     toolData.getProjects.find((project) => project.id === "interview")?.github,
     "https://github.com/sarthak0506/AI-interveiw-coach",
@@ -393,6 +398,6 @@ test("flagship and newly added projects are discoverable without invented metric
   );
   assert.equal(
     new Set(toolData.getProjects.map((project) => project.id)).size,
-    7,
+    8,
   );
 });

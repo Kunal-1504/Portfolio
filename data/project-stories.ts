@@ -88,6 +88,94 @@ export const projectStories: Record<Project["id"], ProjectStory> = {
     ],
     evidence: "Repository docs reviewed",
   },
+  lakshya: {
+    reviewedAt: "8 October 2026",
+    summary:
+      "A job-search workspace that turns your existing experience into focused applications—from finding relevant openings to preparing checked documents and tracking what happens next.",
+    facts: [
+      { value: "10", label: "LangGraph workflow stages" },
+      { value: "PDF + DOCX", label: "tailored résumé exports" },
+      { value: "4", label: "supported auto-apply platforms" },
+    ],
+    findings: [
+      {
+        title: "A workflow that can pause and resume",
+        text: "Ten LangGraph stages cover profile, discovery, deduplication, matching, tailoring, criticism, approval, application, tracking, and follow-up drafts. SQLite checkpoints retain progress, and source failures are recorded independently.",
+      },
+      {
+        title: "Match the role before tailoring",
+        text: "Combines semantic or lexical similarity, required-skill overlap, title similarity, and fit judgment. Role, location, required experience, and posting freshness are checked separately from the score. Docker supports MiniLM; cloud mode defaults to lexical matching.",
+      },
+      {
+        title: "Tailoring without invented experience",
+        text: "Selects existing evidence IDs and reorders relevant skills and sections. The renderer copies résumé facts verbatim into PDF and DOCX. An independent critic checks unsupported claims, one-page layout, and consistency between the two files, with bounded revision attempts.",
+      },
+      {
+        title: "Applications with explicit controls",
+        text: "Opt-in automation targets supported Greenhouse, Lever, Ashby, and Recruitee forms. Eligibility checks include a fit score of at least 80, fresh postings, checked documents, and configured caps. Login, CAPTCHA, consent, and missing answers require help; only confirmed submissions are marked applied.",
+      },
+      {
+        title: "Searches continue in the cloud",
+        text: "Vercel Queues process pipeline stages and delayed searches. PostgreSQL stores encrypted account workspace snapshots and pending commands, while locks and idempotent processing coordinate account work. The React dashboard exposes jobs, application status, and workflow activity.",
+      },
+    ],
+    flow: [
+      {
+        label: "Discover roles",
+        icon: "eye",
+        detail:
+          "Import a résumé and choose search preferences. Public feeds and configured employer boards supply openings; the pipeline deduplicates results and records source availability.",
+      },
+      {
+        label: "Check the fit",
+        icon: "layers",
+        detail:
+          "The matcher applies role, location, experience, and freshness gates before scoring. Local MiniLM or cloud lexical similarity combines with skill and title signals; optional Gemini adds structured model reasoning.",
+      },
+      {
+        label: "Tailor & review",
+        icon: "file",
+        detail:
+          "An evidence-only plan selects existing résumé facts. PDF and DOCX renderers generate the bundle, and the critic checks content and format before a persistent approval step.",
+      },
+      {
+        label: "Apply & track",
+        icon: "chart",
+        detail:
+          "Review prepared documents or enable bounded automatic applications on supported forms. Artifact hashes and submission reservations prevent stale bundles and duplicate retries; outcomes and follow-up drafts remain in the workspace.",
+      },
+    ],
+    scope:
+      "Reviewed source commit e18e7ad on 8 October 2026. Job feeds have incomplete coverage; matching scores are heuristics, not hiring probabilities. Cloud mode uses lexical matching, while the Docker setup supports MiniLM. Automatic applications cover selected hosted forms; LinkedIn and Naukri remain manual. Account workspace and provider limits apply. No job-placement results or production performance benchmarks are claimed.",
+    sources: [
+      { label: "Open Lakshya", url: "https://lakshya-job-search.vercel.app" },
+      {
+        label: "LangGraph workflow",
+        url: "https://github.com/Kunal-1504/Lakshya-AI-Job-search/blob/e18e7adf5b2eed56595fe59ba45413c8a5085396/backend/lakshya/pipeline.py",
+      },
+      {
+        label: "Matching & eligibility",
+        url: "https://github.com/Kunal-1504/Lakshya-AI-Job-search/blob/e18e7adf5b2eed56595fe59ba45413c8a5085396/backend/lakshya/matcher.py",
+      },
+      {
+        label: "Evidence-only résumé generation",
+        url: "https://github.com/Kunal-1504/Lakshya-AI-Job-search/blob/e18e7adf5b2eed56595fe59ba45413c8a5085396/backend/lakshya/resume_tailor.py",
+      },
+      {
+        label: "Independent document critic",
+        url: "https://github.com/Kunal-1504/Lakshya-AI-Job-search/blob/e18e7adf5b2eed56595fe59ba45413c8a5085396/backend/lakshya/agents/critic.py",
+      },
+      {
+        label: "Automatic application policy",
+        url: "https://github.com/Kunal-1504/Lakshya-AI-Job-search/blob/e18e7adf5b2eed56595fe59ba45413c8a5085396/backend/lakshya/services/application_policy.py",
+      },
+      {
+        label: "Cloud worker & scheduling",
+        url: "https://github.com/Kunal-1504/Lakshya-AI-Job-search/blob/e18e7adf5b2eed56595fe59ba45413c8a5085396/backend/lakshya/cloud/worker.py",
+      },
+    ],
+    evidence: "Source code reviewed",
+  },
   interview: {
     reviewedAt: "8 October 2026",
     summary:

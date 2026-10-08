@@ -10,6 +10,9 @@ import {
   ShieldCheck,
   Mic,
   MessageSquare,
+  Search,
+  BriefcaseBusiness,
+  ArrowRight,
 } from "lucide-react";
 import type { Project } from "@/data/portfolio";
 export function ProjectArt({ project }: { project: Project }) {
@@ -36,6 +39,33 @@ export function ProjectArt({ project }: { project: Project }) {
           <span className="platform-caption">
             INGEST · RETRIEVE · UNDERSTAND
           </span>
+        </div>
+      ) : project.id === "lakshya" ? (
+        <div className="lakshya-art">
+          <div className="lakshya-search">
+            <Search size={13} />
+            <span>Your next opportunity</span>
+          </div>
+          <div className="lakshya-pipeline">
+            <span>
+              <BriefcaseBusiness size={20} />
+              <small>Discover</small>
+            </span>
+            <ArrowRight size={13} />
+            <span>
+              <FileText size={20} />
+              <small>Tailor</small>
+            </span>
+            <ArrowRight size={13} />
+            <span>
+              <ShieldCheck size={20} />
+              <small>Review</small>
+            </span>
+          </div>
+          <div className="lakshya-evidence">
+            <Check size={11} />
+            Built from your evidence
+          </div>
         </div>
       ) : project.id === "interview" ? (
         <div className="interview-art">

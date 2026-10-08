@@ -2845,6 +2845,62 @@ a {
   --cover-ink: #9fdad4 !important;
   --cover-base: #152b30 !important;
 }
+.cover-lakshya {
+  --cover-ink: #f1c38d !important;
+  --cover-base: #30231d !important;
+}
+.project-dialog .case-study.case-lakshya {
+  --case-accent: #f1c38d;
+  --case-tint: #34281f;
+}
+.lakshya-art {
+  width: min(100%, 320px);
+  color: var(--cover-ink, #f1c38d);
+}
+.lakshya-search,
+.lakshya-evidence {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 8px;
+}
+.lakshya-search {
+  padding: 6px;
+  border: 1px solid #ffffff1a;
+  border-radius: 20px;
+  background: #ffffff06;
+}
+.lakshya-pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 12px 0;
+}
+.lakshya-pipeline > span {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+}
+.lakshya-pipeline small {
+  font-size: 8px;
+}
+.lakshya-evidence {
+  opacity: 0.7;
+}
+.case-visual .lakshya-search,
+.case-visual .lakshya-evidence,
+.case-visual .lakshya-pipeline small {
+  font-size: 12px;
+}
+.case-visual .lakshya-pipeline {
+  margin: 24px 0;
+}
+.case-visual .lakshya-pipeline > span > svg {
+  width: 32px;
+  height: 32px;
+}
 .interview-art {
   width: min(100%, 290px);
   margin: auto;
