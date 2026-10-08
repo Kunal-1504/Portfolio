@@ -15,7 +15,7 @@ export function previewAnswer(question: string): {
       tool: "getProjects",
     };
   if (
-    /project|built|portfolio|cloud|midc|workout|society|compliance|cognitive|guardian|doomscroll/.test(
+    /project|built|portfolio|cloud|midc|workout|society|compliance|cognitive|guardian|doomscroll|interview|coach/.test(
       q,
     )
   )

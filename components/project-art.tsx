@@ -8,6 +8,8 @@ import {
   Check,
   Smartphone,
   ShieldCheck,
+  Mic,
+  MessageSquare,
 } from "lucide-react";
 import type { Project } from "@/data/portfolio";
 export function ProjectArt({ project }: { project: Project }) {
@@ -34,6 +36,31 @@ export function ProjectArt({ project }: { project: Project }) {
           <span className="platform-caption">
             INGEST · RETRIEVE · UNDERSTAND
           </span>
+        </div>
+      ) : project.id === "interview" ? (
+        <div className="interview-art">
+          <div className="interview-context">
+            <FileText size={15} />
+            <span>Résumé + role</span>
+          </div>
+          <div className="interview-conversation">
+            <span>
+              <Mic size={22} />
+            </span>
+            <div>
+              <MessageSquare size={15} />
+              <i />
+              <i />
+            </div>
+          </div>
+          <div className="interview-rubric">
+            {["Relevance", "Evidence", "Structure", "Clarity"].map((label) => (
+              <span key={label}>
+                <Check size={10} />
+                {label}
+              </span>
+            ))}
+          </div>
         </div>
       ) : project.id === "cloud" ? (
         <svg className="chart-art" viewBox="0 0 240 100">

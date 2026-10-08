@@ -185,8 +185,8 @@ export function ProjectDetail({ project }: { project: Project }) {
           )}
         </div>
         <small>
-          Reviewed 1 October 2026 · Diagrams summarize the implementation; they
-          are not performance benchmarks.
+          Reviewed {story.reviewedAt ?? "1 October 2026"} · Diagrams summarize
+          the implementation; they are not performance benchmarks.
         </small>
       </section>
       <footer className="case-footer">

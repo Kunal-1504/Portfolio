@@ -1,6 +1,7 @@
 import type { Project } from "@/data/portfolio";
 
 export type ProjectStory = {
+  reviewedAt?: string;
   summary: string;
   facts: { value: string; label: string }[];
   findings: { title: string; text: string }[];
@@ -86,6 +87,85 @@ export const projectStories: Record<Project["id"], ProjectStory> = {
       { label: "AI pipeline & models · private repository" },
     ],
     evidence: "Repository docs reviewed",
+  },
+  interview: {
+    reviewedAt: "8 October 2026",
+    summary:
+      "A practice loop that connects a résumé and target role to focused questions, spoken or typed answers, and specific coaching for the next round.",
+    facts: [
+      { value: "4", label: "answer feedback dimensions" },
+      { value: "3 formats", label: "PDF, DOCX & TXT inputs" },
+      { value: "Voice + text", label: "signed-in practice modes" },
+    ],
+    findings: [
+      {
+        title: "Preparation grounded in your documents",
+        text: "Extracts text from résumé and job-description files up to 8 MB each. The model identifies strengths, learning gaps, a study plan, and role-specific questions that can be edited before practice.",
+      },
+      {
+        title: "Four dimensions, explicit evidence",
+        text: "Scores relevance, evidence, structure, and clarity from 0–10 with an explanation for each. The application calculates the overall score from those dimensions, and returns improvement notes and an example answer.",
+      },
+      {
+        title: "Speak, review, then submit",
+        text: "The signed-in practice page records microphone audio for transcription and lets the user edit the transcript before submitting. Question playback uses configurable text-to-speech providers; typed answers remain available.",
+      },
+      {
+        title: "A history of practice, not just one score",
+        text: "SQLAlchemy models store rounds, individual answers, rubric feedback, and final reports. Users can resume unfinished practice and revisit earlier rounds with summaries and next steps.",
+      },
+      {
+        title: "Providers can fail without ending practice",
+        text: "The LLM adapter tries Gemini first and falls back to Groq. Speech adapters support local Whisper or Seamless services and hosted alternatives, while the UI keeps a text path when voice services are unavailable.",
+      },
+    ],
+    flow: [
+      {
+        label: "Read the context",
+        icon: "file",
+        detail:
+          "Upload a text-based résumé and job description. FastAPI extracts PDF, DOCX, or TXT content and sends bounded document context to the coaching model.",
+      },
+      {
+        label: "Prepare questions",
+        icon: "sparkles",
+        detail:
+          "Gemini, with Groq as fallback, generates role-alignment notes and interview questions. The session creator reviews and edits questions before saving them.",
+      },
+      {
+        label: "Practice answers",
+        icon: "layers",
+        detail:
+          "The authenticated React practice flow supports typed answers or microphone recording. Recorded audio is transcribed and remains editable; question audio is provided through TTS adapters.",
+      },
+      {
+        label: "Review & repeat",
+        icon: "chart",
+        detail:
+          "The coach returns evidence-based feedback across four dimensions. The application aggregates scores, saves answers and reports, and exposes previous rounds for review.",
+      },
+    ],
+    scope:
+      "Source reviewed at commit 5726592 on 8 October 2026. Educational coaching estimates, not validated hiring assessments. The signed-in practice flow has voice endpoints; the separate candidate app still references routes absent from the reviewed API, and the Daily call bot/follow-up loop is not fully connected. Provider-backed runtime and deployment performance were not tested. Repository hosted under sarthak0506.",
+    sources: [
+      {
+        label: "Coaching & rubric implementation",
+        url: "https://github.com/sarthak0506/AI-interveiw-coach/blob/5726592b687e833904c6564cbb6cdd7efa839200/backend/app/agents/coach.py",
+      },
+      {
+        label: "Practice & voice API",
+        url: "https://github.com/sarthak0506/AI-interveiw-coach/blob/5726592b687e833904c6564cbb6cdd7efa839200/backend/app/routers/interview.py",
+      },
+      {
+        label: "Practice interface",
+        url: "https://github.com/sarthak0506/AI-interveiw-coach/blob/5726592b687e833904c6564cbb6cdd7efa839200/frontend/hr-portal/src/pages/PracticePage.jsx",
+      },
+      {
+        label: "Document ingestion",
+        url: "https://github.com/sarthak0506/AI-interveiw-coach/blob/5726592b687e833904c6564cbb6cdd7efa839200/backend/app/agents/documents.py",
+      },
+    ],
+    evidence: "Source code reviewed",
   },
   cloud: {
     summary:
