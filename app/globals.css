@@ -2858,6 +2858,16 @@ a {
   font-size: 10px;
   opacity: 0.8;
 }
+.project-cover .interview-conversation {
+  margin: 8px 0;
+}
+.project-cover .interview-conversation > span {
+  width: 36px;
+  height: 36px;
+}
+.project-cover .interview-rubric span {
+  padding: 3px;
+}
 .interview-conversation {
   display: flex;
   align-items: center;
